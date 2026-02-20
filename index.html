@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cynthia García Ybarra — AI & Data Science</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0a0a0c;
+      --surface: #111114;
+      --surface-2: #1a1a1f;
+      --border: #2a2a30;
+      --text: #e8e6e3;
+      --text-muted: #8a8a95;
+      --accent: #c4f042;
+      --accent-dim: #c4f04220;
+      --warm: #f0a860;
+      --cool: #60a0f0;
+      --pink: #f06090;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    ::selection { background: var(--accent); color: var(--bg); }
+
+    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+    a:hover { opacity: 0.8; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+    /* Make anchor jumps land below fixed nav */
+    section { scroll-margin-top: 110px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.5rem 2rem;
+      background: rgba(10,10,12,0.87); /* fallback */
+      background: #0a0a0cdd;           /* modern */
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    nav .logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+    }
+    nav .logo span { color: var(--accent); }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    nav ul a:hover { color: var(--accent); opacity: 1; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding-top: 6rem;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-label {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.8rem; font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--accent-dim);
+      border-radius: 100px;
+    }
+    .hero-label::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 550px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+    .hero-stats {
+      display: flex; gap: 3rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .hero-stats .stat-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--accent);
+    }
+    .hero-stats .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.25rem;
+    }
+
+    /* ─── SECTION STYLES ─── */
+    section { padding: 8rem 0; position: relative; }
+    .section-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+    }
+
+    /* ─── SERVICES ─── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .service-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: var(--accent-dim);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+    }
+    .service-card h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.75rem; }
+    .service-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
+    .service-tag {
+      display: inline-block;
+      margin-top: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      padding: 0.3rem 0.75rem;
+      background: var(--accent-dim);
+      border-radius: 100px;
+    }
+
+    /* ─── PROJECTS ─── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .project-visual {
+      height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-visual .metric {
+      position: relative; z-index: 2;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 3rem;
+      font-weight: 500;
+    }
+    .project-body { padding: 2rem; }
+    .project-body h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .project-body .client { font-size: 0.8rem; color: var(--accent); font-weight: 500; margin-bottom: 0.75rem; }
+    .project-body p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+    .project-tags span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+    }
+
+    /* ─── TECH STACK ─── */
+    .tech-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .tech-cat h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .tech-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tech-pills span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text);
+      padding: 0.4rem 0.9rem;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    .tech-pills span:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ─── EXPERIENCE TIMELINE ─── */
+    .timeline { position: relative; padding-left: 3rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 0; bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+    .timeline-item { position: relative; padding-bottom: 3rem; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -3rem; top: 8px;
+      width: 15px; height: 15px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      background: var(--bg);
+    }
+    .timeline-item.current::before {
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent-dim);
+    }
+    .timeline-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+    .timeline-role { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.15rem; }
+    .timeline-company { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+    .timeline-desc { color: var(--text-muted); font-size: 0.85rem; line-height: 1.6; max-width: 600px; }
+
+    /* ─── EDUCATION ─── */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .edu-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+    .edu-card .degree { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .edu-card .school { color: var(--accent); font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .edu-card .thesis { color: var(--text-muted); font-size: 0.85rem; font-style: italic; line-height: 1.5; }
+
+    /* ─── CONTACT ─── */
+    .contact-section { text-align: center; padding: 8rem 0; }
+    .contact-section .section-title { margin-bottom: 1rem; }
+    .contact-section p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 3rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .contact-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+    .contact-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    .contact-btn.primary { background: var(--accent); color: var(--bg); }
+    .contact-btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--accent-dim);
+      opacity: 1;
+    }
+    .contact-btn.secondary { border: 1px solid var(--border); color: var(--text); }
+    .contact-btn.secondary:hover { border-color: var(--accent); color: var(--accent); opacity: 1; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .hero-stats { flex-direction: column; gap: 1.5rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .timeline { padding-left: 2rem; }
+      .timeline-item::before { left: -2rem; }
+      section { padding: 5rem 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAV -->
+  <nav>
+    <div class="logo">CG<span>Y</span></div>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="https://www.linkedin.com/in/cynthiagarciaybarra/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content fade-in">
+        <div class="hero-label">Available for consulting</div>
+        <h1>AI &amp; Data Science<br>that drives <em>results</em></h1>
+        <p>I build predictive models, deploy ML pipelines, and automate workflows — turning complex data into measurable business impact across finance, healthcare, and retail.</p>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num">5+</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+          <div>
+            <div class="stat-num">1M+</div>
+            <div class="stat-label">Records Processed</div>
+          </div>
+          <div>
+            <div class="stat-num">25h/wk</div>
+            <div class="stat-label">Saved via Automation</div>
+          </div>
+          <div>
+            <div class="stat-num">30%</div>
+            <div class="stat-label">Engagement Increase</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <div class="section-tag fade-in">What I Do</div>
+      <h2 class="section-title fade-in">Services</h2>
+      <div class="services-grid">
+        <div class="service-card fade-in">
+          <div class="service-icon">⚙️</div>
+          <h3>ML Models & MLOps</h3>
+          <p>End-to-end machine learning pipelines — from feature engineering to production deployment, monitoring, and scaling.</p>
+          <span class="service-tag">High Demand</span>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon">🔍</div>
+          <h3>Fraud & Anomaly Detection</h3>
+          <p>Custom detection systems for financial services and insurance, with business-rule tuning and threshold optimization.</p>
+          <span class="service-tag">Finance & Insurance</span>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon">💬</div>
+          <h3>NLP & Text Analytics</h3>
+          <p>Sentiment analysis, topic modeling, text classification, and LLM prompt engineering for actionable insights from unstructured data.</p>
+          <span class="service-tag">Any Industry</span>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon">🧬</div>
+          <h3>Synthetic Data & Privacy AI</h3>
+          <p>Generate privacy-preserving synthetic datasets for model training, testing, and regulatory compliance. NeurIPS-published research.</p>
+          <span class="service-tag">Unique Expertise</span>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon">📊</div>
+          <h3>Dashboards & Automation</h3>
+          <p>Real-time dashboards and workflow automation that save teams hours per week and surface insights that drive decisions.</p>
+          <span class="service-tag">Quick ROI</span>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon">📈</div>
+          <h3>Financial Modeling & Risk</h3>
+          <p>Structured note valuation, Monte Carlo simulations, scenario analysis, and financial health scoring at scale.</p>
+          <span class="service-tag">Specialized</span>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon">🤖</div>
+          <h3>Agentic AI & Automation</h3>
+          <p>End-to-end agentic workflows using MCP and LLMs to automate complex business processes — from ticket creation to deployment pipelines. Zero manual intervention.</p>
+          <span class="service-tag">Cutting Edge</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" style="background: var(--surface);">
+    <div class="container">
+      <div class="section-tag fade-in">Proof of Impact</div>
+      <h2 class="section-title fade-in">Selected Projects</h2>
+      <div class="projects-grid">
+
+        <div class="project-card fade-in">
+          <div class="project-visual" style="background: linear-gradient(135deg, #1a2a0a, #0a1a0a);">
+            <div class="metric" style="color: var(--accent);">+10%</div>
+          </div>
+          <div class="project-body">
+            <div class="client">Definity Insurance</div>
+            <h3>Fraud Detection Pipeline</h3>
+            <p>Built a Gemini-powered prompt workflow converting quote notes into fraud-risk features. Increased recall by 10% and precision by 5%. Generated synthetic data for class imbalance.</p>
+            <div class="project-tags">
+              <span>Vertex AI</span><span>Gemini</span><span>Synthetic Data</span><span>Python</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card fade-in">
+          <div class="project-visual" style="background: linear-gradient(135deg, #0a1a2a, #0a0a2a);">
+            <div class="metric" style="color: var(--cool);">1M+</div>
+          </div>
+          <div class="project-body">
+            <div class="client">ALGORITHIA, Grupo Salinas</div>
+            <h3>Financial Health Detection</h3>
+            <p>Developed Mexico's first financial health detection system processing 1M+ credit profiles. Reduced complaint resolution by 20% with NLP on social media data.</p>
+            <div class="project-tags">
+              <span>NLP</span><span>ResNet</span><span>Python</span><span>SQL</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card fade-in">
+          <div class="project-visual" style="background: linear-gradient(135deg, #2a0a1a, #1a0a2a);">
+            <div class="metric" style="color: var(--pink);">45K+</div>
+          </div>
+          <div class="project-body">
+            <div class="client">Mila - Quebec AI Institute / NeurIPS 2025</div>
+            <h3>Synthetic Health Records Generation</h3>
+            <p>Pioneered Adversarial Random Forest methodology generating 45,000+ patient records with 650 variables. Thesis poster accepted at WiML @ NeurIPS 2025.</p>
+            <div class="project-tags">
+              <span>ARF</span><span>Privacy AI</span><span>PyTorch</span><span>Research</span>
+            </div>
+            <a href="https://corpus.ulaval.ca/entities/publication/c41c0a08-ed5b-4b24-adc6-7551e0987acb" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:0.4rem;margin-top:1rem;font-size:0.85rem;font-weight:500;color:var(--accent);">
+              📄 Read Thesis →
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card fade-in">
+          <div class="project-visual" style="background: linear-gradient(135deg, #1a1a0a, #0a1a1a);">
+            <div class="metric" style="color: var(--warm);">25h/wk</div>
+          </div>
+          <div class="project-body">
+            <div class="client">Jacmar Foodservice Distribution</div>
+            <h3>Operations Automation & Dashboards</h3>
+            <p>Automated workflows saving 25 hours/week. Built real-time dashboards for 7 restaurants increasing bonus rates by 20%. AI-powered customer feedback analysis.</p>
+            <div class="project-tags">
+              <span>Python</span><span>APIs</span><span>Dashboards</span><span>AI</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card fade-in">
+          <div class="project-visual" style="background: linear-gradient(135deg, #0a2a1a, #0a1a0a);">
+            <div class="metric" style="color: var(--accent);">+9%</div>
+          </div>
+          <div class="project-body">
+            <div class="client">Morgan Stanley</div>
+            <h3>Anomaly Detection in Financial Reports</h3>
+            <p>Built the first scalable anomaly detection pipeline for 10-Q financial statements. Custom OCR and PDF scraping for inaccessible external data.</p>
+            <div class="project-tags">
+              <span>OCR</span><span>Anomaly Detection</span><span>Pipeline</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card fade-in">
+          <div class="project-visual" style="background: linear-gradient(135deg, #0a2a2a, #0a0a1a);">
+            <div class="metric" style="color: var(--accent);">MCP</div>
+          </div>
+          <div class="project-body">
+            <div class="client">Morgan Stanley</div>
+            <h3>Agentic Jira Ticket Automation</h3>
+            <p>Automated the end-to-end implementation ticket lifecycle using Agentic AI with MCP and Atlassian integration — from ticket creation to deployment, eliminating manual handoffs.</p>
+            <div class="project-tags">
+              <span>Agentic AI</span><span>MCP</span><span>Atlassian</span><span>Jira</span><span>LLM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card fade-in">
+          <div class="project-visual" style="background: linear-gradient(135deg, #1a0a2a, #2a0a1a);">
+            <div class="metric" style="color: var(--cool);">BERTopic</div>
+          </div>
+          <div class="project-body">
+            <div class="client">FEMSA (OXXO)</div>
+            <h3>Employee Retention Predictive Models</h3>
+            <p>Analyzed employee movement data and built predictive models for rotation. Topic modeling and sentiment analysis on interview questionnaires for strategic retention plans.</p>
+            <div class="project-tags">
+              <span>BERTopic</span><span>NLP</span><span>INEGI</span><span>Prediction</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section id="stack">
+    <div class="container">
+      <div class="section-tag fade-in">Tech Stack</div>
+      <h2 class="section-title fade-in">Tools & Technologies</h2>
+      <div class="tech-categories fade-in">
+        <div class="tech-cat">
+          <h3>Languages</h3>
+          <div class="tech-pills">
+            <span>Python</span><span>SQL</span><span>R</span><span>MATLAB</span><span>JavaScript</span><span>Visual Basic</span>
+          </div>
+        </div>
+        <div class="tech-cat">
+          <h3>AI / ML Frameworks</h3>
+          <div class="tech-pills">
+            <span>PyTorch</span><span>Scikit-learn</span><span>BERTopic</span><span>LLMs</span><span>SHAP</span><span>ResNet</span><span>Agentic AI</span><span>MCP</span>
+          </div>
+        </div>
+        <div class="tech-cat">
+          <h3>Data Platforms</h3>
+          <div class="tech-pills">
+            <span>Snowflake</span><span>Google Cloud</span><span>Vertex AI</span><span>Databricks</span><span>Compute Canada</span>
+          </div>
+        </div>
+        <div class="tech-cat">
+          <h3>Analytics & Viz</h3>
+          <div class="tech-pills">
+            <span>Looker Studio</span><span>Streamlit</span><span>Google Analytics</span><span>Reach Reporting</span>
+          </div>
+        </div>
+        <div class="tech-cat">
+          <h3>DevOps & MLOps</h3>
+          <div class="tech-pills">
+            <span>Git</span><span>Docker</span><span>CI/CD</span><span>MLflow</span><span>APIs</span><span>Jira</span><span>Atlassian</span>
+          </div>
+        </div>
+        <div class="tech-cat">
+          <h3>Languages Spoken</h3>
+          <div class="tech-pills">
+            <span>🇲🇽 Spanish — Native</span><span>🇬🇧 English — Advanced</span><span>🇫🇷 French — Intermediate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" style="background: var(--surface);">
+    <div class="container">
+      <div class="section-tag fade-in">Career Path</div>
+      <h2 class="section-title fade-in">Experience</h2>
+      <div class="timeline fade-in">
+
+        <div class="timeline-item current">
+          <div class="timeline-date">Dec 2025 – Present</div>
+          <div class="timeline-role">Data Scientist</div>
+          <div class="timeline-company">Morgan Stanley — Montreal</div>
+          <div class="timeline-desc">Anomaly detection pipeline for 10-Q financial statements. Custom OCR data extraction. Automated end-to-end Jira implementation ticket lifecycle using Agentic AI with MCP and Atlassian integration.</div>
+        </div>
+
+        <div class="timeline-item current">
+          <div class="timeline-date">Nov 2025 – Present</div>
+          <div class="timeline-role">Data Scientist (Contract)</div>
+          <div class="timeline-company">FEMSA (OXXO) — Mexico</div>
+          <div class="timeline-desc">Predictive models for employee rotation. NLP on interviews with BERTopic and prompt engineering.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">May 2025 – Nov 2025</div>
+          <div class="timeline-role">Data Scientist (Contract)</div>
+          <div class="timeline-company">Definity — Montreal</div>
+          <div class="timeline-desc">Fraud detection with Gemini on Vertex AI. Synthetic data generation. AUCPR +9% lift.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">Mar 2025 – May 2025</div>
+          <div class="timeline-role">Data Scientist (Intern)</div>
+          <div class="timeline-company">Honeywell — Mexico</div>
+          <div class="timeline-desc">ML pipeline for supply chain lead time prediction. SHAP-based interpretability.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">Feb 2025 – Aug 2025</div>
+          <div class="timeline-role">Data Consultant</div>
+          <div class="timeline-company">Jacmar Foodservice Distribution</div>
+          <div class="timeline-desc">Automated workflows saving 25h/week. Dashboards for 7 restaurants.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">Jan 2023 – Jul 2025</div>
+          <div class="timeline-role">Master's Researcher</div>
+          <div class="timeline-company">Mila - Quebec AI Institute / Université Laval</div>
+          <div class="timeline-desc">Synthetic EHR generation. NeurIPS 2025 poster accepted.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">Jan 2022 – Jul 2024</div>
+          <div class="timeline-role">Data Scientist</div>
+          <div class="timeline-company">ALGORITHIA, Grupo Salinas — Mexico</div>
+          <div class="timeline-desc">Financial health detection (1M+ profiles). NLP for complaints. ResNet for marketing QA.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">Apr 2019 – May 2021</div>
+          <div class="timeline-role">Finance Analyst</div>
+          <div class="timeline-company">Valmer, Mexican Stock Exchange</div>
+          <div class="timeline-desc">Structured note valuation. Monte Carlo optimization (50% runtime reduction).</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">Jun 2018 – Jan 2019</div>
+          <div class="timeline-role">Intern, Budget Analysis</div>
+          <div class="timeline-company">Central Bank of Mexico (Banxico)</div>
+          <div class="timeline-desc">Time series budget forecasting. 85% accuracy improvement.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section>
+    <div class="container">
+      <div class="section-tag fade-in">Education</div>
+      <h2 class="section-title fade-in">Academic Background</h2>
+      <div class="edu-grid fade-in">
+        <div class="edu-card">
+          <div class="degree">M.Sc. Computer Science (Research)</div>
+          <div class="school">Mila - Quebec AI Institute / Université Laval</div>
+          <div class="thesis">Thesis: "Adversarial Random Forest for Synthetic Electronic Health Records Generation"</div>
+          <a href="https://corpus.ulaval.ca/entities/publication/c41c0a08-ed5b-4b24-adc6-7551e0987acb" target="_blank" rel="noopener"
+             style="display:inline-flex;align-items:center;gap:0.4rem;margin-top:0.75rem;font-size:0.85rem;font-weight:500;color:var(--accent);">
+            📄 Read Thesis →
+          </a>
+        </div>
+        <div class="edu-card">
+          <div class="degree">B.Sc. Actuarial Science</div>
+          <div class="school">Universidad Nacional Autónoma de México (UNAM)</div>
+          <div class="thesis">Thesis: "Game Theory: An Application to Housing Credit"</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <div class="section-tag fade-in">Let's Work Together</div>
+      <h2 class="section-title fade-in">Get in Touch</h2>
+      <p class="fade-in">Looking for an AI/ML expert who delivers measurable results? Let's talk about your next project.</p>
+
+      <div class="contact-links fade-in">
+        <!-- Option A (Cloudflare only): keep your protected link + Cloudflare script below -->
+        <a href="/cdn-cgi/l/email-protection#0e6d7760516038384e6d676b606d676f7d207b606f63206376" class="contact-btn primary">✉ Email Me</a>
+
+        <!-- Option B (works everywhere): replace with your email and delete the Cloudflare script
+        <a href="mailto:your.email@example.com" class="contact-btn primary">✉ Email Me</a>
+        -->
+
+        <a href="https://www.linkedin.com/in/cynthiagarciaybarra/" target="_blank" rel="noopener" class="contact-btn secondary">in LinkedIn</a>
+        <a href="tel:+13673809835" class="contact-btn secondary">📞 +1 (367) 380-9835</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Cynthia García Ybarra — Montreal, Canada</p>
+    </div>
+  </footer>
+
+  <!-- If NOT using Cloudflare, remove this script AND the /cdn-cgi email link above -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+
+  <script>
+    // Scroll-triggered fade-in animations (fixed + complete)
+    (function () {
+      const elements = document.querySelectorAll('.fade-in');
+
+      // Fallback for older browsers
+      if (!('IntersectionObserver' in window)) {
+        elements.forEach(el => el.classList.add('visible'));
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.classList.add('visible');
+            }, i * 100);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      elements.forEach(el => observer.observe(el));
+    })();
+  </script>
+</body>
+</html>
