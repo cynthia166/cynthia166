@@ -20,8 +20,23 @@
     .hero-label{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:500;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:2rem;padding:.5rem 1rem;border:1px solid var(--accent-dim);border-radius:100px}
     .hero-label::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+    .hero-name{font-family:'JetBrains Mono',monospace;font-size:.9rem;font-weight:500;color:var(--text);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.25rem;display:flex;align-items:center;gap:.75rem}
+    .hero-name::before{content:'';width:28px;height:1px;background:var(--accent)}
     .hero h1{font-family:'Instrument Serif',serif;font-size:clamp(3rem,7vw,5.5rem);line-height:1.05;letter-spacing:-.03em;margin-bottom:1.5rem}.hero h1 em{font-style:italic;color:var(--accent)}
-    .hero p{font-size:1.15rem;color:var(--text-muted);max-width:550px;line-height:1.7;margin-bottom:2.5rem}
+    .hero-bio{font-size:1.15rem;color:var(--text-muted);max-width:600px;line-height:1.75;margin-bottom:1.5rem}
+    .hero-bio strong{color:var(--text);font-weight:500}
+    .hero-meta{display:flex;flex-wrap:wrap;gap:1.25rem;margin-bottom:2.5rem;font-size:.85rem;color:var(--text-muted)}
+    .hero-meta span{display:inline-flex;align-items:center;gap:.4rem}
+    .hero-meta span::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.6}
+    .hero-contact{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:2.5rem}
+    .hero-contact a{display:inline-flex;align-items:center;gap:.45rem;font-size:.9rem;font-weight:500;color:var(--text);padding:.5rem 1rem;border:1px solid var(--border);border-radius:100px;transition:all .3s}
+    .hero-contact a:hover{border-color:var(--accent);color:var(--accent);opacity:1;transform:translateY(-2px)}
+    .hero-contact a:first-child{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+    .hero-contact a:first-child:hover{color:var(--bg);box-shadow:0 8px 30px var(--accent-dim)}
+    .hero-cta{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem}
+    .hero-cta .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.75rem;border-radius:100px;font-size:.9rem;font-weight:500;transition:all .3s}
+    .hero-cta .btn.primary{background:var(--accent);color:var(--bg)}.hero-cta .btn.primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--accent-dim);opacity:1}
+    .hero-cta .btn.ghost{border:1px solid var(--border);color:var(--text)}.hero-cta .btn.ghost:hover{border-color:var(--accent);color:var(--accent);opacity:1}
     .hero-stats{display:flex;gap:3rem;padding-top:2.5rem;border-top:1px solid var(--border)}
     .hero-stats .stat-num{font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:500;color:var(--accent)}
     .hero-stats .stat-label{font-size:.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:.25rem}
@@ -108,9 +123,20 @@
   <section class="hero">
     <div class="container">
       <div class="hero-content fade-in">
-        <div class="hero-label">Available for consulting</div>
-        <h1>AI &amp; Data Science<br>that drives <em>results</em></h1>
-        <p>I build predictive models, deploy ML pipelines, and automate workflows — turning complex data into measurable business impact across finance, healthcare, and retail.</p>
+        <div class="hero-label">Open to consulting & full-time roles</div>
+        <div class="hero-name">Cynthia García Ybarra</div>
+        <h1>I ship production ML<br>that drives <em>results</em></h1>
+        <p class="hero-bio">Data Scientist with <strong>5+ years</strong> turning messy data into deployed models — across finance, insurance, healthcare, and retail. I move fast from prototype to production: fraud detection, anomaly pipelines, agentic AI, and privacy-preserving synthetic data — work that earned a <strong>NeurIPS workshop</strong> poster. Currently at <strong>Morgan Stanley</strong> in Montreal.</p>
+        <div class="hero-meta">
+          <span>Montreal, Canada</span>
+          <span>M.Sc. — Mila / Université Laval</span>
+          <span>🇲🇽 ES · 🇬🇧 EN · 🇫🇷 FR</span>
+        </div>
+        <div class="hero-contact">
+          <a href="/cdn-cgi/l/email-protection#0e6d7760516038384e6d676b606d676f7d207b606f63206376">✉ Email me</a>
+          <a href="tel:+13673809835">📞 +1 (367) 380-9835</a>
+          <a href="https://www.linkedin.com/in/cynthiagarciaybarra/" target="_blank" rel="noopener">in LinkedIn ↗</a>
+        </div>
         <div class="hero-stats">
           <div><div class="stat-num">5+</div><div class="stat-label">Years Experience</div></div>
           <div><div class="stat-num">1M+</div><div class="stat-label">Records Processed</div></div>
@@ -171,14 +197,14 @@
       <div class="section-tag fade-in">What I Do</div>
       <h2 class="section-title fade-in">Services</h2>
       <div class="services-grid">
-        <div class="service-card fade-in"><div class="service-icon">⚙️</div><h3>ML Models & MLOps</h3><p>End-to-end machine learning pipelines — from feature engineering to production deployment, monitoring, and scaling.</p><span class="service-tag">High Demand</span></div>
-        <div class="service-card fade-in"><div class="service-icon">🔍</div><h3>Fraud & Anomaly Detection</h3><p>Custom detection systems for financial services and insurance, with business-rule tuning and threshold optimization.</p><span class="service-tag">Finance & Insurance</span></div>
-        <div class="service-card fade-in"><div class="service-icon">💬</div><h3>NLP & Text Analytics</h3><p>Sentiment analysis, topic modeling, text classification, and LLM prompt engineering for actionable insights from unstructured data.</p><span class="service-tag">Any Industry</span></div>
-        <div class="service-card fade-in"><div class="service-icon">🧬</div><h3>Synthetic Data & Privacy AI</h3><p>Generate privacy-preserving synthetic datasets for model training, testing, and regulatory compliance. NeurIPS-published research.</p><span class="service-tag">Unique Expertise</span></div>
-        <div class="service-card fade-in"><div class="service-icon">📊</div><h3>Dashboards & Automation</h3><p>Real-time dashboards and workflow automation that save teams hours per week and surface insights that drive decisions.</p><span class="service-tag">Quick ROI</span></div>
-        <div class="service-card fade-in"><div class="service-icon">📈</div><h3>Financial Modeling & Risk</h3><p>Structured note valuation, Monte Carlo simulations, scenario analysis, and financial health scoring at scale.</p><span class="service-tag">Specialized</span></div>
-        <div class="service-card fade-in"><div class="service-icon">🤖</div><h3>Agentic AI & Automation</h3><p>End-to-end agentic workflows using MCP and LLMs to automate complex business processes — from ticket creation to deployment pipelines. Zero manual intervention.</p><span class="service-tag">Cutting Edge</span></div>
-        <div class="service-card fade-in"><div class="service-icon">🎯</div><h3>Digital Marketing Analytics</h3><p>Data-driven marketing campaigns, A/B testing, audience segmentation, and performance analytics to maximize engagement and conversion rates.</p><span class="service-tag">Growth</span></div>
+        <div class="service-card fade-in"><div class="service-icon">⚙️</div><h3>ML Models & MLOps</h3><p>End-to-end ML pipelines, from feature engineering to production deployment and monitoring.</p><span class="service-tag">High Demand</span></div>
+        <div class="service-card fade-in"><div class="service-icon">🔍</div><h3>Fraud & Anomaly Detection</h3><p>Detection systems for finance and insurance, with business-rule tuning and threshold optimization.</p><span class="service-tag">Finance & Insurance</span></div>
+        <div class="service-card fade-in"><div class="service-icon">💬</div><h3>NLP & Text Analytics</h3><p>Sentiment analysis, topic modeling, and LLM prompt engineering on unstructured data.</p><span class="service-tag">Any Industry</span></div>
+        <div class="service-card fade-in"><div class="service-icon">🧬</div><h3>Synthetic Data & Privacy AI</h3><p>Privacy-preserving synthetic datasets for training, testing, and compliance. NeurIPS workshop.</p><span class="service-tag">Unique Expertise</span></div>
+        <div class="service-card fade-in"><div class="service-icon">📊</div><h3>Dashboards & Automation</h3><p>Real-time dashboards and workflow automation that save teams hours every week.</p><span class="service-tag">Quick ROI</span></div>
+        <div class="service-card fade-in"><div class="service-icon">📈</div><h3>Financial Modeling & Risk</h3><p>Structured note valuation, Monte Carlo simulations, and financial health scoring at scale.</p><span class="service-tag">Specialized</span></div>
+        <div class="service-card fade-in"><div class="service-icon">🤖</div><h3>Agentic AI & Automation</h3><p>Agentic workflows with MCP and LLMs that automate processes end to end — zero manual handoffs.</p><span class="service-tag">Cutting Edge</span></div>
+        <div class="service-card fade-in"><div class="service-icon">🎯</div><h3>Digital Marketing Analytics</h3><p>A/B testing, audience segmentation, and performance analytics to lift engagement and conversion.</p><span class="service-tag">Growth</span></div>
       </div>
     </div>
   </section>
@@ -200,8 +226,8 @@
             Morgan Stanley
           </div>
           <h3>Anomaly Detection & Agentic Jira Automation</h3>
-          <p>Built the first scalable anomaly detection pipeline for 10-Q financial statements with custom OCR and PDF scraping. Automated end-to-end Jira implementation ticket lifecycle using Agentic AI with MCP and Atlassian integration — from ticket creation to deployment, eliminating manual handoffs.</p>
-          <div class="project-tags"><span>Agentic AI</span><span>MCP</span><span>OCR</span><span>Anomaly Detection</span><span>Atlassian</span><span>Jira</span><span>LLM</span><span>Pipeline</span></div>
+          <p>Built the first scalable anomaly detection pipeline for 10-Q filings with custom OCR. Automated the full Jira ticket lifecycle with agentic AI (MCP + Atlassian) — from creation to deployment, no manual handoffs.</p>
+          <div class="project-tags"><span>Agentic AI</span><span>MCP</span><span>OCR</span><span>Anomaly Detection</span><span>Atlassian</span><span>LLM</span></div>
         </div>
       </div>
 
@@ -211,7 +237,7 @@
           <div class="project-body">
             <div class="client"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a2a0a"/><path d="M8 7h4c4 0 7 3 7 7s-3 7-7 7H8V7z" stroke="#8bc34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13" cy="14" r="2.5" stroke="#8bc34a" stroke-width="1.3"/></svg> Definity Insurance</div>
             <h3>Fraud Detection Pipeline</h3>
-            <p>Built a Gemini-powered prompt workflow converting quote notes into fraud-risk features. Increased recall by 10% and precision by 5%. Generated synthetic data for class imbalance.</p>
+            <p>Gemini-powered workflow turning quote notes into fraud-risk features. +10% recall, +5% precision. Synthetic data for class imbalance.</p>
             <div class="project-tags"><span>Vertex AI</span><span>Gemini</span><span>Synthetic Data</span><span>Python</span></div>
           </div>
         </div>
@@ -221,7 +247,7 @@
           <div class="project-body">
             <div class="client"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a2a1a"/><path d="M14 6v16M8 10c0 0 3-2 6-2s6 2 6 2" stroke="#4caf50" stroke-width="1.8" stroke-linecap="round"/><path d="M8 18c0 0 3 2 6 2s6-2 6-2" stroke="#4caf50" stroke-width="1.8" stroke-linecap="round"/><circle cx="14" cy="14" r="2" fill="#4caf50"/></svg> ALGORITHIA, Grupo Salinas</div>
             <h3>Financial Health Detection</h3>
-            <p>Developed Mexico's first financial health detection system processing 1M+ credit profiles at Grupo Salinas — one of Mexico's largest conglomerates spanning banking, retail, and telecom. Reduced complaint resolution by 20% with NLP on social media data.</p>
+            <p>Built Mexico's first financial health detection system on 1M+ credit profiles. NLP on social data cut complaint resolution by 20%.</p>
             <div class="project-tags"><span>NLP</span><span>ResNet</span><span>Python</span><span>SQL</span></div>
           </div>
         </div>
@@ -229,9 +255,9 @@
         <div class="project-card fade-in">
           <div class="project-visual" style="background:linear-gradient(135deg,#2a0a1a,#1a0a2a)"><div class="metric" style="color:var(--pink)">45K+</div></div>
           <div class="project-body">
-            <div class="client"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a2a2a"/><circle cx="10" cy="10" r="3" stroke="#4dd0e1" stroke-width="1.5"/><circle cx="18" cy="10" r="3" stroke="#4dd0e1" stroke-width="1.5"/><circle cx="14" cy="18" r="3" stroke="#4dd0e1" stroke-width="1.5"/><path d="M12 12l2 3M16 12l-2 3" stroke="#4dd0e1" stroke-width="1.2"/></svg> Mila - Quebec AI Institute / NeurIPS 2025</div>
+            <div class="client"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a2a2a"/><circle cx="10" cy="10" r="3" stroke="#4dd0e1" stroke-width="1.5"/><circle cx="18" cy="10" r="3" stroke="#4dd0e1" stroke-width="1.5"/><circle cx="14" cy="18" r="3" stroke="#4dd0e1" stroke-width="1.5"/><path d="M12 12l2 3M16 12l-2 3" stroke="#4dd0e1" stroke-width="1.2"/></svg> Mila - Quebec AI Institute / NeurIPS Workshop 2025</div>
             <h3>Synthetic Health Records Generation</h3>
-            <p>Pioneered Adversarial Random Forest methodology generating 45,000+ patient records with 650 variables. Thesis poster accepted at WiML @ NeurIPS 2025.</p>
+            <p>Adversarial Random Forest generating 45K+ patient records across 650 variables. Poster accepted at the WiML workshop, NeurIPS 2025.</p>
             <div class="project-tags"><span>ARF</span><span>Privacy AI</span><span>PyTorch</span><span>Research</span></div>
             <a href="https://corpus.ulaval.ca/entities/publication/c41c0a08-ed5b-4b24-adc6-7551e0987acb" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.85rem;font-weight:500;color:var(--accent)">📄 Read Thesis →</a>
           </div>
@@ -242,7 +268,7 @@
           <div class="project-body">
             <div class="client"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a1a2a"/><path d="M12 8v8c0 3-2 4-4 4" stroke="#60a0f0" stroke-width="2" stroke-linecap="round"/><path d="M16 8l3 6 3-6" stroke="#60a0f0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 14v6M22 14v6" stroke="#60a0f0" stroke-width="1.5" stroke-linecap="round"/></svg> Jacmar Foodservice Distribution</div>
             <h3>Operations Automation & Dashboards</h3>
-            <p>Automated workflows saving 25 hours/week at Jacmar — a multi-brand foodservice distributor operating 7+ restaurant locations across the US. Built real-time dashboards increasing bonus rates by 20%. AI-powered customer feedback analysis.</p>
+            <p>Automated workflows saving 25 hours/week across 7 restaurants. Real-time dashboards lifted bonus rates by 20%.</p>
             <div class="project-tags"><span>Python</span><span>APIs</span><span>Dashboards</span><span>AI</span></div>
           </div>
         </div>
@@ -252,7 +278,7 @@
           <div class="project-body">
             <div class="client"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a0a2a"/><path d="M8 8h8M8 14h6M8 20h8M8 8v12" stroke="#a070e0" stroke-width="2" stroke-linecap="round"/><circle cx="21" cy="14" r="3" stroke="#a070e0" stroke-width="1.3"/></svg> Elogia (Viko Group)</div>
             <h3>Marketing Campaign Analytics</h3>
-            <p>Increased engagement by 30% across marketing campaigns at Elogia — a leading digital commerce marketing agency (part of Viko Group) specializing in performance marketing across Spain and Latin America. Data-driven audience segmentation and campaign optimization.</p>
+            <p>Lifted campaign engagement by 30% through data-driven audience segmentation and A/B testing.</p>
             <div class="project-tags"><span>Analytics</span><span>Marketing</span><span>Segmentation</span><span>A/B Testing</span></div>
           </div>
         </div>
@@ -262,8 +288,8 @@
           <div class="project-body">
             <div class="client"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#2a0a0a"/><path d="M8 8h7M8 14h5M8 20h3M8 8v12" stroke="#e05050" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="14" r="4" stroke="#e05050" stroke-width="1.5"/><path d="M20 11v6" stroke="#e05050" stroke-width="1.3" stroke-linecap="round"/></svg> FEMSA (OXXO)</div>
             <h3>Employee Retention Predictive Models</h3>
-            <p>Analyzed employee movement data and built predictive models for rotation. Topic modeling and sentiment analysis on interview questionnaires for strategic retention plans.</p>
-            <div class="project-tags"><span>BERTopic</span><span>NLP</span><span>INEGI</span><span>Prediction</span></div>
+            <p>Predictive models for employee turnover across 330K+ employees. Topic modeling on interviews drove retention strategy.</p>
+            <div class="project-tags"><span>BERTopic</span><span>NLP</span><span>Causal Forest</span><span>Prediction</span></div>
           </div>
         </div>
       </div>
@@ -297,7 +323,7 @@
           <div class="timeline-role">Data Scientist</div>
           <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a3a5c"/><path d="M6 19V9l4 7 4-7v10" stroke="#5ba3e6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 14.5c0-2.5 1.5-5.5 4.5-5.5 1.5 0 2.5 1 2.5 2.5 0 2-2 3-4.5 3v4.5" stroke="#5ba3e6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Morgan Stanley — Montreal</div>
           <div class="timeline-company-desc">Global leader in financial services, investment banking, and wealth management</div>
-          <div class="timeline-desc">Anomaly detection pipeline for 10-Q financial statements. Custom OCR data extraction. Automated end-to-end Jira implementation ticket lifecycle using Agentic AI with MCP and Atlassian integration.</div>
+          <div class="timeline-desc">Anomaly detection on 10-Q filings with custom OCR. Automated the Jira ticket lifecycle with agentic AI (MCP + Atlassian).</div>
         </div>
 
         <div class="timeline-item current">
@@ -305,7 +331,7 @@
           <div class="timeline-role">Data Scientist (Contract)</div>
           <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#2a0a0a"/><path d="M8 8h7M8 14h5M8 20h3M8 8v12" stroke="#e05050" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="14" r="4" stroke="#e05050" stroke-width="1.5"/><path d="M20 11v6" stroke="#e05050" stroke-width="1.3" stroke-linecap="round"/></svg> FEMSA (OXXO) — Mexico</div>
           <div class="timeline-company-desc">Latin America's largest convenience store chain with 20,000+ locations</div>
-          <div class="timeline-desc">Predictive models for employee rotation. NLP on interviews with BERTopic and prompt engineering.</div>
+          <div class="timeline-desc">Causal Forest turnover models across 330K+ employees. NLP on interviews with BERTopic.</div>
         </div>
 
         <div class="timeline-item">
@@ -313,7 +339,7 @@
           <div class="timeline-role">Data Scientist (Contract)</div>
           <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a2a0a"/><path d="M8 7h4c4 0 7 3 7 7s-3 7-7 7H8V7z" stroke="#8bc34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13" cy="14" r="2.5" stroke="#8bc34a" stroke-width="1.3"/></svg> Definity — Montreal</div>
           <div class="timeline-company-desc">One of Canada's leading property and casualty insurance companies</div>
-          <div class="timeline-desc">Fraud detection with Gemini on Vertex AI. Synthetic data generation. AUCPR +9% lift.</div>
+          <div class="timeline-desc">Fraud detection with Gemini on Vertex AI. Synthetic data generation. +9% AUCPR lift.</div>
         </div>
 
         <div class="timeline-item">
@@ -321,7 +347,7 @@
           <div class="timeline-role">Data Scientist (Intern)</div>
           <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#2a1a0a"/><path d="M7 9v10M7 14h6M13 9v10" stroke="#e05020" stroke-width="1.8" stroke-linecap="round"/><path d="M16 14l3-5 3 5-3 5-3-5z" stroke="#e05020" stroke-width="1.5" stroke-linejoin="round"/></svg> Honeywell — Mexico</div>
           <div class="timeline-company-desc">Fortune 100 technology and manufacturing multinational</div>
-          <div class="timeline-desc">ML pipeline for supply chain lead time prediction. SHAP-based interpretability.</div>
+          <div class="timeline-desc">ML pipeline for supply chain lead time prediction. SHAP interpretability.</div>
         </div>
 
         <div class="timeline-item">
@@ -329,15 +355,15 @@
           <div class="timeline-role">Data Consultant</div>
           <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a1a2a"/><path d="M12 8v8c0 3-2 4-4 4" stroke="#60a0f0" stroke-width="2" stroke-linecap="round"/><path d="M16 8l3 6 3-6" stroke="#60a0f0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 14v6M22 14v6" stroke="#60a0f0" stroke-width="1.5" stroke-linecap="round"/></svg> Jacmar Foodservice Distribution</div>
           <div class="timeline-company-desc">Multi-brand foodservice distributor operating 7+ restaurant locations across the US</div>
-          <div class="timeline-desc">Automated workflows saving 25h/week. Dashboards for 7 restaurants. AI-powered customer feedback analysis.</div>
+          <div class="timeline-desc">Automated workflows saving 25h/week. Dashboards for 7 restaurants. AI feedback analysis.</div>
         </div>
 
         <div class="timeline-item">
           <div class="timeline-date">2024</div>
           <div class="timeline-role">Marketing Data Analyst</div>
           <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a0a2a"/><path d="M8 8h8M8 14h6M8 20h8M8 8v12" stroke="#a070e0" stroke-width="2" stroke-linecap="round"/><circle cx="21" cy="14" r="3" stroke="#a070e0" stroke-width="1.3"/></svg> Elogia (Viko Group) — Mexico</div>
-          <div class="timeline-company-desc">Award-winning digital commerce marketing agency specializing in performance marketing across Spain & LATAM</div>
-          <div class="timeline-desc">Increased engagement by 30% through data-driven marketing campaigns. Audience segmentation, campaign performance analytics, and A/B testing.</div>
+          <div class="timeline-company-desc">Award-winning digital commerce marketing agency across Spain & LATAM</div>
+          <div class="timeline-desc">+30% engagement through data-driven campaigns, segmentation, and A/B testing.</div>
         </div>
 
         <div class="timeline-item">
@@ -345,14 +371,14 @@
           <div class="timeline-role">Master's Researcher</div>
           <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a2a2a"/><circle cx="10" cy="10" r="3" stroke="#4dd0e1" stroke-width="1.5"/><circle cx="18" cy="10" r="3" stroke="#4dd0e1" stroke-width="1.5"/><circle cx="14" cy="18" r="3" stroke="#4dd0e1" stroke-width="1.5"/><path d="M12 12l2 3M16 12l-2 3" stroke="#4dd0e1" stroke-width="1.2"/></svg> Mila - Quebec AI Institute / Université Laval</div>
           <div class="timeline-company-desc">Canada's premier AI research institute</div>
-          <div class="timeline-desc">Synthetic EHR generation. NeurIPS 2025 poster accepted.</div>
+          <div class="timeline-desc">Synthetic EHR generation. Poster accepted at the WiML workshop, NeurIPS 2025.</div>
         </div>
 
         <div class="timeline-item">
           <div class="timeline-date">Jan 2022 – Jul 2024</div>
           <div class="timeline-role">Data Scientist</div>
           <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a2a1a"/><path d="M14 6v16M8 10c0 0 3-2 6-2s6 2 6 2" stroke="#4caf50" stroke-width="1.8" stroke-linecap="round"/><path d="M8 18c0 0 3 2 6 2s6-2 6-2" stroke="#4caf50" stroke-width="1.8" stroke-linecap="round"/><circle cx="14" cy="14" r="2" fill="#4caf50"/></svg> ALGORITHIA, Grupo Salinas — Mexico</div>
-          <div class="timeline-company-desc">AI lab within Grupo Salinas — one of Mexico's largest conglomerates spanning banking, retail, telecom, and media</div>
+          <div class="timeline-company-desc">AI lab within Grupo Salinas — banking, retail, telecom, and media conglomerate</div>
           <div class="timeline-desc">Financial health detection (1M+ profiles). NLP for complaints. ResNet for marketing QA.</div>
         </div>
 
@@ -369,7 +395,7 @@
           <div class="timeline-role">Intern, Budget Analysis</div>
           <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a1a0a"/><rect x="8" y="8" width="12" height="12" rx="2" stroke="#fdd835" stroke-width="1.5"/><path d="M11 14h6M14 11v6" stroke="#fdd835" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="14" r="5.5" stroke="#fdd835" stroke-width="1" stroke-dasharray="2 2"/></svg> Central Bank of Mexico (Banxico)</div>
           <div class="timeline-company-desc">Mexico's central bank responsible for monetary policy and financial stability</div>
-          <div class="timeline-desc">Time series budget forecasting. 85% accuracy improvement.</div>
+          <div class="timeline-desc">Time series budget forecasting. +85% accuracy improvement.</div>
         </div>
 
       </div>
@@ -402,7 +428,7 @@
     <div class="container">
       <div class="section-tag fade-in">Let's Work Together</div>
       <h2 class="section-title fade-in">Get in Touch</h2>
-      <p class="fade-in">Looking for an AI/ML expert who delivers measurable results? Let's talk about your next project.</p>
+      <p class="fade-in">Looking for an AI/ML expert who ships measurable results — as a consultant or full-time? Let's talk about your next project.</p>
       <div class="contact-links fade-in">
         <a href="/cdn-cgi/l/email-protection#0e6d7760516038384e6d676b606d676f7d207b606f63206376" class="contact-btn primary">✉ Email Me</a>
         <a href="https://www.linkedin.com/in/cynthiagarciaybarra/" target="_blank" rel="noopener" class="contact-btn secondary">in LinkedIn</a>
