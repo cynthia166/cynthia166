@@ -1,456 +1,522 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cynthia García Ybarra — AI & Data Science</title>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    :root{--bg:#0a0a0c;--surface:#111114;--surface-2:#1a1a1f;--border:#2a2a30;--text:#e8e6e3;--text-muted:#8a8a95;--accent:#c4f042;--accent-dim:#c4f04220;--warm:#f0a860;--cool:#60a0f0;--pink:#f06090}
-    *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
-    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
-    body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
-    ::selection{background:var(--accent);color:var(--bg)}a{color:var(--accent);text-decoration:none;transition:opacity .2s}a:hover{opacity:.8}.container{max-width:1200px;margin:0 auto;padding:0 2rem}section{scroll-margin-top:110px}
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 2rem;background:#0a0a0cdd;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-    nav .logo{font-family:'Instrument Serif',serif;font-size:1.3rem;letter-spacing:-.02em}nav .logo span{color:var(--accent)}
-    nav ul{list-style:none;display:flex;gap:2rem}nav ul a{color:var(--text-muted);font-size:.85rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;transition:color .3s}nav ul a:hover{color:var(--accent);opacity:1}
-    .hero{min-height:100vh;display:flex;align-items:center;padding-top:6rem;position:relative}
-    .hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,var(--accent-dim) 0%,transparent 70%);pointer-events:none}
-    .hero-content{position:relative;z-index:2}
-    .hero-label{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:500;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:2rem;padding:.5rem 1rem;border:1px solid var(--accent-dim);border-radius:100px}
-    .hero-label::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-    .hero-name{font-family:'JetBrains Mono',monospace;font-size:.9rem;font-weight:500;color:var(--text);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.25rem;display:flex;align-items:center;gap:.75rem}
-    .hero-name::before{content:'';width:28px;height:1px;background:var(--accent)}
-    .hero h1{font-family:'Instrument Serif',serif;font-size:clamp(3rem,7vw,5.5rem);line-height:1.05;letter-spacing:-.03em;margin-bottom:1.5rem}.hero h1 em{font-style:italic;color:var(--accent)}
-    .hero-bio{font-size:1.15rem;color:var(--text-muted);max-width:600px;line-height:1.75;margin-bottom:1.5rem}
-    .hero-bio strong{color:var(--text);font-weight:500}
-    .hero-meta{display:flex;flex-wrap:wrap;gap:1.25rem;margin-bottom:2.5rem;font-size:.85rem;color:var(--text-muted)}
-    .hero-meta span{display:inline-flex;align-items:center;gap:.4rem}
-    .hero-meta span::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.6}
-    .hero-contact{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:2.5rem}
-    .hero-contact a{display:inline-flex;align-items:center;gap:.45rem;font-size:.9rem;font-weight:500;color:var(--text);padding:.5rem 1rem;border:1px solid var(--border);border-radius:100px;transition:all .3s}
-    .hero-contact a:hover{border-color:var(--accent);color:var(--accent);opacity:1;transform:translateY(-2px)}
-    .hero-contact a:first-child{background:var(--accent);color:var(--bg);border-color:var(--accent)}
-    .hero-contact a:first-child:hover{color:var(--bg);box-shadow:0 8px 30px var(--accent-dim)}
-    .hero-cta{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem}
-    .hero-cta .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.75rem;border-radius:100px;font-size:.9rem;font-weight:500;transition:all .3s}
-    .hero-cta .btn.primary{background:var(--accent);color:var(--bg)}.hero-cta .btn.primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--accent-dim);opacity:1}
-    .hero-cta .btn.ghost{border:1px solid var(--border);color:var(--text)}.hero-cta .btn.ghost:hover{border-color:var(--accent);color:var(--accent);opacity:1}
-    .hero-stats{display:flex;gap:3rem;padding-top:2.5rem;border-top:1px solid var(--border)}
-    .hero-stats .stat-num{font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:500;color:var(--accent)}
-    .hero-stats .stat-label{font-size:.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:.25rem}
-    .trusted-by{padding:4rem 0;border-bottom:1px solid var(--border)}
-    .trusted-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-muted);letter-spacing:.15em;text-transform:uppercase;text-align:center;margin-bottom:2.5rem}
-    .logo-bar{display:flex;align-items:center;justify-content:center;gap:2.5rem;flex-wrap:wrap}
-    .company-logo-item{display:flex;align-items:center;gap:.65rem;opacity:.5;transition:opacity .3s;cursor:default}
-    .company-logo-item:hover{opacity:1}.company-logo-item svg{flex-shrink:0}
-    .company-logo-item .co-name{font-size:.85rem;font-weight:500;color:var(--text-muted);letter-spacing:.01em;white-space:nowrap}
-    .company-logo-item:hover .co-name{color:var(--text)}
-    section{padding:8rem 0;position:relative}
-    .section-tag{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1rem}
-    .section-title{font-family:'Instrument Serif',serif;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.02em;margin-bottom:3rem}
-    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
-    .service-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.5rem 2rem;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
-    .service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent) 0%,transparent 100%);opacity:0;transition:opacity .4s}
-    .service-card:hover{border-color:var(--accent);transform:translateY(-4px)}.service-card:hover::before{opacity:1}
-    .service-icon{width:48px;height:48px;border-radius:12px;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.5rem}
-    .service-card h3{font-size:1.15rem;font-weight:600;margin-bottom:.75rem}.service-card p{color:var(--text-muted);font-size:.9rem;line-height:1.6}
-    .service-tag{display:inline-block;margin-top:1.25rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);padding:.3rem .75rem;background:var(--accent-dim);border-radius:100px}
-    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:2rem}
-    .project-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all .4s cubic-bezier(.4,0,.2,1)}
-    .project-card:hover{border-color:var(--accent);transform:translateY(-4px)}
-    .project-visual{height:200px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-    .project-visual .metric{position:relative;z-index:2;font-family:'JetBrains Mono',monospace;font-size:3rem;font-weight:500}
-    .project-body{padding:2rem}.project-body h3{font-size:1.15rem;font-weight:600;margin-bottom:.5rem}
-    .project-body .client{font-size:.8rem;color:var(--accent);font-weight:500;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
-    .project-body .client svg{flex-shrink:0}.project-body p{color:var(--text-muted);font-size:.88rem;line-height:1.6}
-    .project-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.25rem}
-    .project-tags span{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-muted);padding:.25rem .6rem;border:1px solid var(--border);border-radius:100px}
-    .featured-project{background:var(--surface);border:1px solid var(--accent);border-radius:20px;overflow:hidden;margin-bottom:2.5rem;display:grid;grid-template-columns:1fr 1fr;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative}
-    .featured-project::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent) 0%,var(--cool) 50%,var(--accent) 100%)}
-    .featured-project:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(196,240,66,.06)}
-    .featured-visual{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a1a2a,#0a2a1a);min-height:280px;position:relative;overflow:hidden}
-    .featured-visual::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(96,160,240,.15),transparent 60%)}
-    .featured-visual .metric{font-family:'JetBrains Mono',monospace;font-size:4rem;font-weight:500;color:var(--cool);position:relative;z-index:2}
-    .featured-badge{position:absolute;top:1.25rem;left:1.25rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding:.3rem .75rem;background:var(--accent-dim);border-radius:100px;z-index:3}
-    .featured-body{padding:2.5rem;display:flex;flex-direction:column;justify-content:center}
-    .featured-body .client{font-size:.85rem;color:var(--accent);font-weight:500;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
-    .featured-body .client svg{flex-shrink:0}.featured-body h3{font-size:1.35rem;font-weight:600;margin-bottom:.75rem}
-    .featured-body p{color:var(--text-muted);font-size:.9rem;line-height:1.7}.featured-body .project-tags{margin-top:1.5rem}
-    .tech-categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}
-    .tech-cat h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border)}
-    .tech-pills{display:flex;flex-wrap:wrap;gap:.5rem}
-    .tech-pills span{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--text);padding:.4rem .9rem;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;transition:all .3s}
-    .tech-pills span:hover{border-color:var(--accent);color:var(--accent)}
-    .timeline{position:relative;padding-left:3rem}.timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:1px;background:var(--border)}
-    .timeline-item{position:relative;padding-bottom:3rem}
-    .timeline-item::before{content:'';position:absolute;left:-3rem;top:8px;width:15px;height:15px;border-radius:50%;border:2px solid var(--accent);background:var(--bg)}
-    .timeline-item.current::before{background:var(--accent);box-shadow:0 0 12px var(--accent-dim)}
-    .timeline-date{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent);margin-bottom:.25rem}
-    .timeline-role{font-size:1.1rem;font-weight:600;margin-bottom:.15rem}
-    .timeline-company{font-size:.9rem;color:var(--text-muted);margin-bottom:.25rem;display:flex;align-items:center;gap:.5rem}.timeline-company svg{flex-shrink:0}
-    .timeline-company-desc{font-size:.78rem;color:var(--text-muted);font-style:italic;margin-bottom:.5rem;opacity:.7}
-    .timeline-desc{color:var(--text-muted);font-size:.85rem;line-height:1.6;max-width:600px}
-    .edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}
-    .edu-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem}
-    .edu-card .degree{font-size:1.1rem;font-weight:600;margin-bottom:.25rem}.edu-card .school{color:var(--accent);font-size:.9rem;margin-bottom:.5rem}
-    .edu-card .thesis{color:var(--text-muted);font-size:.85rem;font-style:italic;line-height:1.5}
-    .contact-section{text-align:center;padding:8rem 0}.contact-section .section-title{margin-bottom:1rem}
-    .contact-section p{color:var(--text-muted);font-size:1.05rem;margin-bottom:3rem;max-width:500px;margin-left:auto;margin-right:auto}
-    .contact-links{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
-    .contact-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 2rem;border-radius:100px;font-size:.9rem;font-weight:500;transition:all .3s}
-    .contact-btn.primary{background:var(--accent);color:var(--bg)}.contact-btn.primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--accent-dim);opacity:1}
-    .contact-btn.secondary{border:1px solid var(--border);color:var(--text)}.contact-btn.secondary:hover{border-color:var(--accent);color:var(--accent);opacity:1}
-    footer{padding:3rem 0;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:.8rem}
-    .fade-in{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.4,0,.2,1)}.fade-in.visible{opacity:1;transform:translateY(0)}
-    @media(max-width:768px){nav ul{display:none}.hero-stats{flex-direction:column;gap:1.5rem}.projects-grid{grid-template-columns:1fr}.featured-project{grid-template-columns:1fr}.featured-visual{min-height:200px}.timeline{padding-left:2rem}.timeline-item::before{left:-2rem}section{padding:5rem 0}.logo-bar{gap:1.5rem}}
-  </style>
-</head>
-<body>
-  <nav>
-    <div class="logo">CG<span>Y</span></div>
-    <ul>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#stack">Stack</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="https://www.linkedin.com/in/cynthiagarciaybarra/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
-    </ul>
-  </nav>
+ <!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Cynthia García Ybarra · Data &amp; AI Consulting</title>
+<meta name="description" content="Data and AI consulting for businesses: cut costs, find growth and trust your numbers. Free 30-minute consultation and free demo. Montreal, Canada.">
+<meta property="og:title" content="Cynthia García Ybarra · Data &amp; AI Consulting">
+<meta property="og:description" content="Data and AI consulting for businesses: cut costs, find growth and trust your numbers. Free 30-minute consultation and free demo. Montreal, Canada.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236247E0'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' text-anchor='middle' fill='%23FFFFFF'%3EC%3C/text%3E%3C/svg%3E">
+<meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one narrow column of summaries; every project and role is a short card that opens its detail on demand. */
+:root{
+  /* Pastel gradient: lavender -> periwinkle -> baby blue -> mint. Pastels are backgrounds only; text and buttons use deeper shades so they stay readable */
+  --bg:#F6F3FF;--surface:rgba(255,255,255,.78);--surface-2:#FFE8F1;--border:#DCD5F3;--border-pink:#F7C3D8;--babypink:#FFD6E6;
+  --text:#221E44;--muted:#55507A;--accent:#5A3FCF;--fill:#D9CCFF;--pop:#6247E0;--accent-ink:#FFFFFF;--accent-dim:rgba(98,71,224,.12);
+  --warm:#C2562F;--cool:#2F7F79;--pink:#B03F86;--teal:#2F6F69;--arctic:#BCDDDC;--coral:#FE9179;--bubblegum:#FDC1B4;--scrim:rgba(34,30,68,.45);
+  --grad:linear-gradient(180deg,#FFE6F0 0%,#F1E4FF 22%,#E2EAFF 45%,#DDF0F4 70%,#FFE9F1 100%);
+  --grad-text:linear-gradient(90deg,#7446DC 0%,#4F6FE0 45%,#2F7F79 100%);
+  --serif:'Instrument Serif',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
 
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content fade-in">
-        <div class="hero-label">Open to consulting & full-time roles</div>
-        <div class="hero-name">Cynthia García Ybarra</div>
-        <h1>I ship production ML<br>that drives <em>results</em></h1>
-        <p class="hero-bio">Data Scientist with <strong>5+ years</strong> turning messy data into deployed models — across finance, insurance, healthcare, and retail. I move fast from prototype to production: fraud detection, anomaly pipelines, agentic AI, and privacy-preserving synthetic data — work that earned a <strong>NeurIPS workshop</strong> poster. Currently at <strong>Morgan Stanley</strong> in Montreal.</p>
-        <div class="hero-meta">
-          <span>Montreal, Canada</span>
-          <span>M.Sc. — Mila / Université Laval</span>
-          <span>🇲🇽 ES · 🇬🇧 EN · 🇫🇷 FR</span>
-        </div>
-        <div class="hero-contact">
-          <a href="/cdn-cgi/l/email-protection#0e6d7760516038384e6d676b606d676f7d207b606f63206376">✉ Email me</a>
-          <a href="tel:+13673809835">📞 +1 (367) 380-9835</a>
-          <a href="https://www.linkedin.com/in/cynthiagarciaybarra/" target="_blank" rel="noopener">in LinkedIn ↗</a>
-        </div>
-        <div class="hero-stats">
-          <div><div class="stat-num">5+</div><div class="stat-label">Years Experience</div></div>
-          <div><div class="stat-num">1M+</div><div class="stat-label">Records Processed</div></div>
-          <div><div class="stat-num">25h/wk</div><div class="stat-label">Saved via Automation</div></div>
-          <div><div class="stat-num">30%</div><div class="stat-label">Engagement Increase</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-size:16px;line-height:1.6;background:var(--bg) var(--grad) fixed;min-height:100vh;color:var(--text)}
+a{color:var(--accent)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px}
+section{padding-block:64px;scroll-margin-top:72px}
+.alt{background:var(--surface)}
+.tag{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.02em;line-height:1.1;margin-bottom:10px;text-wrap:balance}
+.lede{color:var(--muted);max-width:60ch;margin-bottom:28px}
 
-  <!-- TRUSTED BY -->
-  <div class="trusted-by fade-in">
-    <div class="container">
-      <div class="trusted-label">Trusted by leading organizations</div>
-      <div class="logo-bar">
-        <div class="company-logo-item">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a3a5c"/><path d="M6 19V9l4 7 4-7v10" stroke="#5ba3e6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 14.5c0-2.5 1.5-5.5 4.5-5.5 1.5 0 2.5 1 2.5 2.5 0 2-2 3-4.5 3v4.5" stroke="#5ba3e6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="co-name">Morgan Stanley</span>
-        </div>
-        <div class="company-logo-item">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a2a0a"/><path d="M8 7h4c4 0 7 3 7 7s-3 7-7 7H8V7z" stroke="#8bc34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13" cy="14" r="2.5" stroke="#8bc34a" stroke-width="1.3"/></svg>
-          <span class="co-name">Definity</span>
-        </div>
-        <div class="company-logo-item">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#2a1a0a"/><path d="M7 9v10M7 14h6M13 9v10" stroke="#e05020" stroke-width="1.8" stroke-linecap="round"/><path d="M16 14l3-5 3 5-3 5-3-5z" stroke="#e05020" stroke-width="1.5" stroke-linejoin="round"/></svg>
-          <span class="co-name">Honeywell</span>
-        </div>
-        <div class="company-logo-item">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a2a1a"/><path d="M14 6v16M8 10c0 0 3-2 6-2s6 2 6 2" stroke="#4caf50" stroke-width="1.8" stroke-linecap="round"/><path d="M8 18c0 0 3 2 6 2s6-2 6-2" stroke="#4caf50" stroke-width="1.8" stroke-linecap="round"/><circle cx="14" cy="14" r="2" fill="#4caf50"/></svg>
-          <span class="co-name">Grupo Salinas</span>
-        </div>
-        <div class="company-logo-item">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#2a0a0a"/><path d="M8 8h7M8 14h5M8 20h3M8 8v12" stroke="#e05050" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="14" r="4" stroke="#e05050" stroke-width="1.5"/><path d="M20 11v6" stroke="#e05050" stroke-width="1.3" stroke-linecap="round"/></svg>
-          <span class="co-name">FEMSA</span>
-        </div>
-        <div class="company-logo-item">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a0a2a"/><path d="M8 8h8M8 14h6M8 20h8M8 8v12" stroke="#a070e0" stroke-width="2" stroke-linecap="round"/><circle cx="21" cy="14" r="3" stroke="#a070e0" stroke-width="1.3"/></svg>
-          <span class="co-name">Elogia</span>
-        </div>
-        <div class="company-logo-item">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a1a2a"/><path d="M12 8v8c0 3-2 4-4 4" stroke="#60a0f0" stroke-width="2" stroke-linecap="round"/><path d="M16 8l3 6 3-6" stroke="#60a0f0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 14v6M22 14v6" stroke="#60a0f0" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <span class="co-name">Jacmar</span>
-        </div>
-        <div class="company-logo-item">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a2a2a"/><circle cx="10" cy="10" r="3" stroke="#4dd0e1" stroke-width="1.5"/><circle cx="18" cy="10" r="3" stroke="#4dd0e1" stroke-width="1.5"/><circle cx="14" cy="18" r="3" stroke="#4dd0e1" stroke-width="1.5"/><path d="M12 12l2 3M16 12l-2 3" stroke="#4dd0e1" stroke-width="1.2"/></svg>
-          <span class="co-name">Mila</span>
-        </div>
-        <div class="company-logo-item">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a1a0a"/><rect x="8" y="8" width="12" height="12" rx="2" stroke="#fdd835" stroke-width="1.5"/><path d="M11 14h6M14 11v6" stroke="#fdd835" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="14" r="5.5" stroke="#fdd835" stroke-width="1" stroke-dasharray="2 2"/></svg>
-          <span class="co-name">Banxico</span>
-        </div>
-      </div>
-    </div>
+header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:14px}
+.logo{font-family:var(--serif);font-size:1.3rem}.logo span{color:var(--accent)}
+.nav ul{list-style:none;padding:0;display:flex;gap:22px;flex-wrap:wrap}
+.nav ul a{color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+.nav ul a:hover{color:var(--accent)}
+
+.hero{padding-block:48px 56px}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border:1px solid var(--border);border-radius:100px;padding:6px 14px;margin-bottom:24px}
+.pill::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--pop)}
+.name{font-family:var(--mono);font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.6rem,7vw,5rem);line-height:1.05;letter-spacing:-.03em;margin-bottom:20px;text-wrap:balance}
+h1 em{color:var(--warm);background:var(--grad-text);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-right:.08em}
+.bio{color:var(--muted);font-size:1.08rem;max-width:62ch;margin-bottom:18px}
+.bio strong{color:var(--text);font-weight:500}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;color:var(--muted);font-size:.85rem;margin-bottom:26px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:36px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:100px;border:1px solid var(--border);background:none;color:var(--text);text-decoration:none;font-size:.9rem;font-weight:500;cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--pop);border-color:var(--pop);color:var(--accent-ink)}
+.btn.primary:hover{color:var(--accent-ink);opacity:.9}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px;border-top:1px solid var(--border);padding-top:28px}
+.stats b{display:block;font-family:var(--mono);font-weight:500;font-size:1.7rem;color:var(--accent);font-variant-numeric:tabular-nums}
+.stats span{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px 32px}
+.services h3{font-size:1.02rem;font-weight:600;margin-bottom:4px}
+.services p{color:var(--muted);font-size:.9rem}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.chip{font-family:var(--mono);font-size:.75rem;padding:6px 14px;border-radius:100px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer}
+.chip:hover{color:var(--text)}
+.chip[aria-pressed="true"]{background:var(--fill);border-color:var(--fill);color:var(--text)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.card{display:flex;flex-direction:column;gap:8px;text-align:left;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:20px;cursor:pointer;min-width:0}
+.card:hover{border-color:var(--pop)}
+.card .metric{font-family:var(--mono);font-weight:500;font-size:1.7rem;line-height:1.2}
+.card .client{font-size:.78rem;font-weight:500;color:var(--accent)}
+.card h3{font-size:1.02rem;font-weight:600;line-height:1.35}
+.card .more{margin-top:auto;padding-top:8px;font-size:.8rem;color:var(--muted)}
+.card:hover .more{color:var(--accent)}
+.live{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--border);border-radius:100px;padding:1px 8px;color:var(--muted);margin-left:6px;white-space:nowrap}
+.empty{color:var(--muted)}
+
+dialog{border:1px solid var(--border);border-radius:16px;background:var(--surface);color:var(--text);padding:0;width:min(640px,calc(100vw - 32px));max-height:calc(100vh - 48px);margin:auto}
+dialog::backdrop{background:var(--scrim)}
+.dlg{padding:26px;display:flex;flex-direction:column;gap:16px}
+.dlg-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.dlg .client{font-size:.82rem;font-weight:500;color:var(--accent)}
+.dlg h3{font-family:var(--serif);font-weight:400;font-size:1.7rem;line-height:1.15;text-wrap:balance}
+.x{border:1px solid var(--border);background:none;border-radius:100px;width:34px;height:34px;flex:none;cursor:pointer;font-size:1rem}
+.x:hover{border-color:var(--accent);color:var(--accent)}
+.dlg h4{font-family:var(--mono);font-weight:500;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.dlg p,.dlg li{font-size:.95rem}
+.dlg ul{padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pills span{font-family:var(--mono);font-size:.72rem;padding:4px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);color:var(--text)}
+
+.roles{display:flex;flex-direction:column}
+.role{border-top:1px solid var(--border)}
+.role summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:170px 1fr auto;gap:4px 20px;align-items:baseline;padding-block:16px}
+.role summary::-webkit-details-marker{display:none}
+.role .date{font-family:var(--mono);font-size:.75rem;color:var(--accent)}
+.role .what b{font-weight:600}.role .what span{color:var(--muted)}
+.role .plus{font-family:var(--mono);color:var(--muted)}
+.role[open] .plus{color:var(--accent)}
+.role .body{padding:0 0 18px 190px;color:var(--muted);font-size:.92rem;max-width:calc(190px + 62ch)}
+.role .body ul{padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.earlier>summary{font-weight:600;padding-block:18px;cursor:pointer;border-top:1px solid var(--border)}
+@media (max-width:640px){.role summary{grid-template-columns:1fr auto}.role .date{grid-column:1/-1}.role .body{padding-left:0}.nav ul{display:none}}
+
+.stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px}
+.stack h3{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:12px}
+.edu{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px}
+.edu b{display:block;font-weight:600}.edu .school{color:var(--accent);font-size:.9rem}.edu i{display:block;color:var(--muted);font-size:.88rem;margin-block:4px}
+
+.contact-rows{display:flex;flex-direction:column;gap:12px;max-width:560px}
+.crow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;border:1px solid var(--border-pink);border-radius:12px;padding:12px 16px;background:var(--surface-2)}
+.crow .k{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:76px}
+.crow .v{flex:1;min-width:0;overflow-wrap:anywhere;user-select:all}
+.copy{font-size:.78rem;padding:4px 12px}
+footer{border-top:1px solid var(--border);padding-block:28px;color:var(--muted);font-size:.8rem;text-align:center}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* Tabs layout */
+.nav .wrap{flex-wrap:wrap}
+.logo{text-decoration:none;color:var(--text)}
+.nav ul a[aria-current="page"]{color:var(--accent);box-shadow:inset 0 -2px 0 var(--pop);padding-bottom:4px}
+.nav-cta{padding:8px 16px;font-size:.82rem}
+.panel{padding-block:48px 40px;min-height:calc(100vh - 130px)}
+.hero{text-align:center}
+.hero .bio,.hero .meta,.hero .actions{margin-inline:auto}
+.hero .meta,.hero .actions{justify-content:center}
+.hero .pill{margin-inline:auto}
+.hero .actions{margin-bottom:10px}
+.mail-line{color:var(--muted);font-size:.9rem;margin-bottom:32px}
+.hero .stats{justify-items:center}
+.cta-strip{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;margin-top:44px;padding:18px 20px;border:1px solid var(--border-pink);border-radius:14px;background:var(--surface-2);text-align:center}
+.cta-strip>span:first-child{font-weight:500}
+.cta-strip .or{color:var(--muted);font-size:.88rem}
+.steps{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.steps li{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.steps .n{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--pop);color:var(--accent-ink);font-family:var(--mono);font-weight:500;margin-bottom:12px}
+.steps h3{font-size:1.05rem;margin-bottom:6px}
+.steps p{color:var(--muted);font-size:.92rem}
+.sub{font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:500;margin:28px 0 8px}
+.more-box{margin-top:32px;border-top:1px solid var(--border)}
+.more-box>summary{font-weight:600;padding-block:18px;cursor:pointer}
+.services>div{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px}
+@media (max-width:760px){
+  .nav .wrap{padding-block:10px 0;row-gap:6px}
+  .nav ul{order:3;width:100%;display:flex!important;flex-wrap:wrap;justify-content:center;gap:4px 18px;padding:6px 0 10px}
+  .nav ul::-webkit-scrollbar{display:none}
+  .nav ul a{white-space:nowrap;display:block;padding:4px 0}
+  .nav-cta{margin-left:auto}
+  .panel{min-height:0;padding-block:32px}
+}
+/* Pastel polish */
+.btn.primary{box-shadow:0 6px 18px rgba(98,71,224,.25)}
+.btn.primary:hover{color:#fff;opacity:1;filter:brightness(1.08)}
+.card,.services>div,.steps li,.contact-sec .crow{background:var(--surface);box-shadow:0 4px 18px rgba(80,60,160,.07)}
+.card:hover{border-color:var(--accent)}
+.cta-strip{background:linear-gradient(90deg,#FDEFF7,#EFE9FF 55%,#E3F3FF)}
+.pill{background:rgba(255,255,255,.6)}
+.btn:not(.primary){background:rgba(255,255,255,.6)}
+dialog{background:#FBFAFF}
+/* Previous palette accents: teal, coral, bubblegum */
+.pill::before{background:var(--coral)}
+.nav ul a[aria-current="page"]{box-shadow:inset 0 -2px 0 var(--coral)}
+.hero .journey b,.steps li .n{background:var(--coral);color:#3A1E14}
+.stats b{color:var(--teal)}
+.tag{color:var(--teal)}
+.chip[aria-pressed="true"]{background:var(--arctic);border-color:var(--arctic);color:var(--text)}
+.card:hover{border-color:#F29BBE}
+.pill{background:#FFE8F1;border-color:var(--border-pink)}
+.btn:not(.primary):hover{background:#FFE8F1;border-color:#F29BBE}
+.lang-btn:hover{background:#FFE8F1;border-color:#F29BBE}
+.live{background:#FFE8F1}
+.services>div:nth-child(odd),.steps li:nth-child(2){background:linear-gradient(180deg,#FFF1F6,rgba(255,255,255,.85))}
+.card .client,.dlg .client{color:var(--teal)}
+.pills span{background:#E8F4F3;border-color:var(--arctic)}
+.cta-strip{background:linear-gradient(90deg,#FFDCEA,#F3E8FF 50%,#E2F2F0)}
+.live{border-color:var(--bubblegum);color:#9A4A33}
+/* Language switch */
+.lang-btn{border:1px solid var(--border);background:none;border-radius:100px;padding:6px 12px;font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;cursor:pointer;color:var(--text)}
+.lang-btn:hover{border-color:var(--accent);color:var(--accent)}
+@media (max-width:760px){.lang-btn{margin-left:auto}.nav-cta{margin-left:0}}
+/* Booking */
+.journey{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 12px;margin:6px auto 12px;font-size:.9rem;color:var(--text)}
+.journey b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--pop);color:var(--accent-ink);font-family:var(--mono);font-size:.75rem;margin-right:8px}
+.journey .arr{color:var(--muted)}
+.mini-steps{padding-left:20px;display:flex;flex-direction:column;gap:4px;font-size:.92rem}
+#book{width:min(760px,calc(100vw - 24px))}
+.cal-wrap{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff}
+.cal-wrap iframe{display:block;width:100%;height:min(660px,62vh);border:0}
+.cal-alt{font-size:.88rem;color:var(--muted)}
+/* Closing contact section */
+.contact-sec .wrap{text-align:center}
+.contact-sec .lede{margin-inline:auto}
+.contact-sec .actions{justify-content:center;margin-bottom:28px}
+.contact-sec .contact-rows{margin-inline:auto;text-align:left}
+.contact-sec .cv{margin-top:20px;font-size:.9rem}
+.hero .bio,.hero .meta,.hero .actions{margin-inline:auto}
+.hero .meta,.hero .actions{justify-content:center}
+.hero .stats{justify-items:center}
+.hero .hero .hero .pill{margin-inline:auto}
+</style>
+
+<header class="nav"><div class="wrap">
+  <a class="logo" href="#home">CG<span>Y</span></a>
+  <ul id="tabs">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="lang-btn" type="button" id="lang-btn" lang="fr" aria-label="Voir en français">FR</button>
+  <a class="btn primary nav-cta book" href="https://calendly.com/cyngarciailabs/30min" target="_blank" rel="noopener">Book a free call</a>
+</div></header>
+
+<main>
+<section id="home" class="panel"><div class="wrap hero">
+  <div class="pill">Available for new projects</div>
+  <div class="name">Cynthia García Ybarra</div>
+  <h1>Make your data<br><em>pay off</em></h1>
+  <p class="bio">I help businesses find where to cut costs and where to grow, using AI and clear visualizations that show exactly what to act on. I also make sure your data is secure and well organized, so you can trust the numbers behind your decisions.</p>
+  <div class="meta"><span>Montreal, Canada</span><span>6+ years in data &amp; AI</span><span>M.Sc. Mila / Université Laval</span><span>Spanish · English · French</span></div>
+  <div class="actions">
+    <a class="btn primary book" href="https://calendly.com/cyngarciailabs/30min" target="_blank" rel="noopener">Book a free consultation</a>
   </div>
-  <!-- SERVICES -->
-  <section id="services">
-    <div class="container">
-      <div class="section-tag fade-in">What I Do</div>
-      <h2 class="section-title fade-in">Services</h2>
-      <div class="services-grid">
-        <div class="service-card fade-in"><div class="service-icon">⚙️</div><h3>ML Models & MLOps</h3><p>End-to-end ML pipelines, from feature engineering to production deployment and monitoring.</p><span class="service-tag">High Demand</span></div>
-        <div class="service-card fade-in"><div class="service-icon">🔍</div><h3>Fraud & Anomaly Detection</h3><p>Detection systems for finance and insurance, with business-rule tuning and threshold optimization.</p><span class="service-tag">Finance & Insurance</span></div>
-        <div class="service-card fade-in"><div class="service-icon">💬</div><h3>NLP & Text Analytics</h3><p>Sentiment analysis, topic modeling, and LLM prompt engineering on unstructured data.</p><span class="service-tag">Any Industry</span></div>
-        <div class="service-card fade-in"><div class="service-icon">🧬</div><h3>Synthetic Data & Privacy AI</h3><p>Privacy-preserving synthetic datasets for training, testing, and compliance. NeurIPS workshop.</p><span class="service-tag">Unique Expertise</span></div>
-        <div class="service-card fade-in"><div class="service-icon">📊</div><h3>Dashboards & Automation</h3><p>Real-time dashboards and workflow automation that save teams hours every week.</p><span class="service-tag">Quick ROI</span></div>
-        <div class="service-card fade-in"><div class="service-icon">📈</div><h3>Financial Modeling & Risk</h3><p>Structured note valuation, Monte Carlo simulations, and financial health scoring at scale.</p><span class="service-tag">Specialized</span></div>
-        <div class="service-card fade-in"><div class="service-icon">🤖</div><h3>Agentic AI & Automation</h3><p>Agentic workflows with MCP and LLMs that automate processes end to end — zero manual handoffs.</p><span class="service-tag">Cutting Edge</span></div>
-        <div class="service-card fade-in"><div class="service-icon">🎯</div><h3>Digital Marketing Analytics</h3><p>A/B testing, audience segmentation, and performance analytics to lift engagement and conversion.</p><span class="service-tag">Growth</span></div>
-      </div>
-    </div>
-  </section>
+  <div class="journey"><span><b>1</b>Free 30-minute consultation</span><span class="arr" aria-hidden="true">→</span><span><b>2</b>Free demo for your business</span></div>
+  <p class="mail-line">or email <a href="mailto:cyngarciailabs@gmail.com">cyngarciailabs@gmail.com</a></p>
+  <div class="stats">
+    <div><b>25h</b><span>Manual work saved per week</span></div>
+    <div><b>+30%</b><span>Customer engagement</span></div>
+    <div><b>20%</b><span>Faster complaint resolution</span></div>
+    <div><b>6+</b><span>Years in data &amp; AI</span></div>
+  </div>
+</div></section>
+<section id="services" class="panel" hidden><div class="wrap">
+  <div class="tag">What I can do for you</div>
+  <h2>Services</h2>
+  <p class="lede">Practical ways to make your data save money, earn money, or simply work better.</p>
+  <div class="services">
+    <div><h3>Cut costs and automate busywork</h3><p>Automate reports, timecards and repetitive tasks so your team gets hours back every week.</p></div>
+    <div><h3>See what drives your business</h3><p>Dashboards and analysis that show which customers, products and channels matter most, and what to do next.</p></div>
+    <div><h3>Know what actually works</h3><p>Find out whether a promotion, incentive or change really caused the result, and for whom, before you spend more on it.</p></div>
+    <div><h3>Spot fraud and unusual activity</h3><p>Catch risky transactions and anomalies early, before they turn into losses.</p></div>
+    <div><h3>AI assistants for your team</h3><p>AI tools that read documents, pull information from several sources together and handle multi-step work.</p></div>
+    <div><h3>Clean, secure data you can trust</h3><p>Well-organized data pipelines with the right access controls, including privacy-safe synthetic data for testing.</p></div>
+  </div>
+  <div class="cta-strip"><span>Free consultation, then a free demo.</span><a class="btn primary book" href="https://calendly.com/cyngarciailabs/30min" target="_blank" rel="noopener">Book a free consultation</a><span class="or">or email <a href="mailto:cyngarciailabs@gmail.com">cyngarciailabs@gmail.com</a></span></div>
+</div></section>
+<section id="how" class="panel" hidden><div class="wrap">
+  <div class="tag">How it works</div>
+  <h2>From first call to results</h2>
+  <p class="lede">You see what's possible before you commit to anything.</p>
+  <ol class="steps">
+    <li><span class="n">1</span><h3>Free 30-minute call</h3><p>Tell me about your business and your data. Together we pick the questions worth answering.</p></li>
+    <li><span class="n">2</span><h3>Free demo</h3><p>I show you a small working example of what's possible, built on a sample of your data or on example data, so you can judge the value first.</p></li>
+    <li><span class="n">3</span><h3>Your project</h3><p>We agree on a clear scope, timeline and price. I build it, deliver it and show your team how to use it.</p></li>
+  </ol>
+  <div class="cta-strip"><span>Start with step 1.</span><a class="btn primary book" href="https://calendly.com/cyngarciailabs/30min" target="_blank" rel="noopener">Book a free consultation</a><span class="or">or email <a href="mailto:cyngarciailabs@gmail.com">cyngarciailabs@gmail.com</a></span></div>
+</div></section>
+<section id="results" class="panel" hidden><div class="wrap">
+  <div class="tag">Proof of impact</div>
+  <h2>Selected results</h2>
+  <p class="lede">Projects from my work as an employee and consultant. Open one for the problem, what I did and the result.</p>
+  <div class="chips" id="chips" role="group" aria-label="Filter projects by area"></div>
+  <div class="cards" id="cards"></div>
+  <div class="cta-strip"><span>Free consultation, then a free demo.</span><a class="btn primary book" href="https://calendly.com/cyngarciailabs/30min" target="_blank" rel="noopener">Book a free consultation</a><span class="or">or email <a href="mailto:cyngarciailabs@gmail.com">cyngarciailabs@gmail.com</a></span></div>
+</div></section>
+<section id="about" class="panel" hidden><div class="wrap">
+  <div class="tag">About</div>
+  <h2>Background</h2>
+  <p class="lede">6+ years working with data, from finance and actuarial work to production AI in finance, insurance, retail and healthcare. Open a role for details.</p>
+  <h3 class="sub">Experience</h3>
+<div class="roles">
+    <details class="role"><summary><span class="date">Since Dec 2025</span><span class="what"><b>Data Scientist</b> <span>· Morgan Stanley, Montreal</span></span><span class="plus">+</span></summary>
+      <div class="body"><ul><li>Security and authorization for an enterprise metadata platform for AI models, across UI, backend and infrastructure.</li><li>Trade-level anomaly detection with DeepAR and statistical models in PySpark on Databricks, over 10M+ trades per day.</li><li>Agentic Jira ticket automation with MCP, Jenkins CI/CD for model releases, and OCR extraction of 10-Q data.</li></ul></div></details>
+    <details class="role"><summary><span class="date">Since Nov 2025</span><span class="what"><b>Data Specialist (Project)</b> <span>· FEMSA (OXXO), Mexico</span></span><span class="plus">+</span></summary>
+      <div class="body"><ul><li>Causal analysis of an incentive pilot on 6-month employee turnover.</li><li>Payments and compensation analyses; attrition models and NLP on employee interviews across 330K+ employees.</li><li>Daily monitoring of Azure Data Factory pipelines for sales, promotions and transactions.</li></ul></div></details>
+    <details class="role"><summary><span class="date">2025 · 3 months</span><span class="what"><b>Data Scientist (Contract)</b> <span>· Definity, Montreal</span></span><span class="plus">+</span></summary>
+      <div class="body"><ul><li>Fraud investigation agent built with Google ADK that brings several data sources together for the Special Investigations Unit.</li><li>Refresh of the claims fraud model across two claims data sources.</li></ul></div></details>
+    <details class="role"><summary><span class="date">May 2025 – Nov 2025</span><span class="what"><b>Data Scientist (Intern)</b> <span>· Definity, Montreal</span></span><span class="plus">+</span></summary>
+      <div class="body"><ul><li>Gemini on Vertex AI workflow turning quote notes into a fraud-risk feature.</li><li>Rebuilt the early-detection model: +9% AUCPR in offline evaluation against a production-features baseline.</li><li>Synthetic data for class imbalance, business-rule impact analysis, and a bias and fairness analysis.</li></ul></div></details>
+    <details class="role"><summary><span class="date">Feb 2025 – Aug 2025</span><span class="what"><b>Data Consultant (Part-time)</b> <span>· Jacmar Foodservice Distribution, Montreal</span></span><span class="plus">+</span></summary>
+      <div class="body">Automated workflows saving 25 hours a week, real-time dashboards for 7 restaurants, and AI analysis of customer feedback.</div></details>
+    <details class="role"><summary><span class="date">Mar 2025 – May 2025</span><span class="what"><b>Data Scientist (Consultant)</b> <span>· Honeywell, Mexico</span></span><span class="plus">+</span></summary>
+      <div class="body">ML pipeline for supply chain lead time prediction on Snowflake data (5% accuracy improvement), with SHAP for interpretability.</div></details>
+    <details class="earlier"><summary>Earlier experience, 2018 – 2025</summary>
+      <details class="role"><summary><span class="date">Jan 2023 – Jul 2025</span><span class="what"><b>Master's Thesis Research</b> <span>· Mila – Quebec AI Institute / Université Laval</span></span><span class="plus">+</span></summary>
+        <div class="body">Synthetic electronic health records with Adversarial Random Forests: 45,000+ patient records, 650 variables. Poster at the WiML workshop, NeurIPS 2025.</div></details>
+      <details class="role"><summary><span class="date">Nov 2024 – Jan 2025</span><span class="what"><b>Research Assistant</b> <span>· DataSphere Lab, McGill University</span></span><span class="plus">+</span></summary>
+        <div class="body">Synthetic data pipeline for structured and NLP data, benchmarking five generative models, with a Streamlit dashboard for data quality assessment.</div></details>
+      <details class="role"><summary><span class="date">Jan 2022 – Jul 2024</span><span class="what"><b>Data Scientist</b> <span>· ALGORITHIA, Grupo Salinas, Mexico</span></span><span class="plus">+</span></summary>
+        <div class="body">Financial health detection on 1M+ credit profiles, NLP on social media complaints (20% faster resolution), and ResNet image quality checks for marketing.</div></details>
+      <details class="role"><summary><span class="date">Nov 2021 – Jan 2022</span><span class="what"><b>Data Analyst</b> <span>· NTT DATA, Mexico</span></span><span class="plus">+</span></summary>
+        <div class="body">Key Risk Indicators (booking controls) for Citi Banamex, including two new indicators for transaction monitoring.</div></details>
+      <details class="role"><summary><span class="date">May 2021 – Nov 2021</span><span class="what"><b>Data Analyst</b> <span>· Elogia México</span></span><span class="plus">+</span></summary>
+        <div class="body">Web analytics across 15 properties, 10+ automated dashboards, and recommendation systems that lifted engagement by 30%.</div></details>
+      <details class="role"><summary><span class="date">Apr 2019 – May 2021</span><span class="what"><b>Finance Analyst</b> <span>· Valmer, Mexican Stock Exchange</span></span><span class="plus">+</span></summary>
+        <div class="body">Structured note valuation models and a Monte Carlo re-engineering that cut runtime by 50%.</div></details>
+      <details class="role"><summary><span class="date">Jun 2018 – Jan 2019</span><span class="what"><b>Intern, Budget Analysis</b> <span>· Central Bank of Mexico (Banxico)</span></span><span class="plus">+</span></summary>
+        <div class="body">Statistical analysis of the bank's 2009–2018 budget and time series forecasting.</div></details>
+    </details>
+  </div>
+  <h3 class="sub">Education</h3>
+<div class="edu">
+    <div><b>M.Sc. Computer Science (Research)</b><span class="school">Mila – Quebec AI Institute / Université Laval</span><i>Thesis: "Adversarial Random Forest for Synthetic Electronic Health Records Generation"</i><a href="https://corpus.ulaval.ca/entities/publication/c41c0a08-ed5b-4b24-adc6-7551e0987acb" target="_blank" rel="noopener">Read thesis ↗</a></div>
+    <div><b>B.Sc. Actuarial Science</b><span class="school">Universidad Nacional Autónoma de México (UNAM)</span><i>Thesis: "Game Theory: An Application to Housing Credit"</i></div>
+  </div>
+  <details class="more-box"><summary>Tools &amp; technologies</summary>
+<div class="stack">
+    <div><h3>Languages</h3><div class="pills"><span>Python</span><span>SQL</span><span>R</span><span>JavaScript</span><span>MATLAB</span></div></div>
+    <div><h3>ML</h3><div class="pills"><span>PyTorch</span><span>Scikit-learn</span><span>PySpark</span><span>DeepAR</span><span>DoubleML</span><span>DoWhy</span><span>BERTopic</span><span>SHAP</span></div></div>
+    <div><h3>Agentic AI</h3><div class="pills"><span>MCP</span><span>Google ADK</span><span>LangChain</span><span>LangGraph</span><span>Gemini / Vertex AI</span><span>Snowflake Cortex</span></div></div>
+    <div><h3>Security &amp; platform</h3><div class="pills"><span>OAuth 2.0 OBO</span><span>CSRF protection</span><span>Azure Key Vault</span><span>REST APIs</span><span>Neo4j</span></div></div>
+    <div><h3>Data platforms</h3><div class="pills"><span>Snowflake</span><span>Databricks</span><span>Azure Data Factory</span><span>Google Cloud</span></div></div>
+    <div><h3>MLOps</h3><div class="pills"><span>Git</span><span>Docker</span><span>Jenkins CI/CD</span><span>MLflow</span><span>Linux</span></div></div>
+  </div>
+  </details>
+  <div class="cta-strip"><span>Free consultation, then a free demo.</span><a class="btn primary book" href="https://calendly.com/cyngarciailabs/30min" target="_blank" rel="noopener">Book a free consultation</a><span class="or">or email <a href="mailto:cyngarciailabs@gmail.com">cyngarciailabs@gmail.com</a></span></div>
+</div></section>
+<section id="contact" class="panel contact-sec" hidden><div class="wrap">
+  <div class="tag">Get in touch</div>
+  <h2>Let's talk about your data</h2>
+  <p class="lede">Tell me what you're working with and what you'd like to improve. The first 30-minute call is free, with no obligation.</p>
+  <div class="actions"><a class="btn primary book" href="https://calendly.com/cyngarciailabs/30min" target="_blank" rel="noopener">Book a free consultation</a></div>
+<div class="contact-rows">
+    <div class="crow"><span class="k">Email</span><span class="v" id="em">cyngarciailabs@gmail.com</span><button class="btn copy" data-copy="em">Copy</button></div>
+    <div class="crow"><span class="k">Phone</span><span class="v" id="ph">+1 (367) 380-9835</span><button class="btn copy" data-copy="ph">Copy</button></div>
+    <div class="crow"><span class="k">LinkedIn</span><span class="v"><a href="https://www.linkedin.com/in/cynthiagarciaybarra/" target="_blank" rel="noopener">linkedin.com/in/cynthiagarciaybarra ↗</a></span></div>
+  </div>
+  <p class="cv"><a href="Cynthia_Garcia_Ybarra_CV.pdf" target="_blank" rel="noopener">Download CV</a></p>
+</div></section>
+</main>
 
-  <!-- PROJECTS -->
-  <section id="projects" style="background: var(--surface);">
-    <div class="container">
-      <div class="section-tag fade-in">Proof of Impact</div>
-      <h2 class="section-title fade-in">Selected Projects</h2>
+<footer><div class="wrap">© 2026 Cynthia García Ybarra · Montreal, Canada</div></footer>
 
-      <div class="featured-project fade-in">
-        <div class="featured-visual">
-          <div class="featured-badge">Featured</div>
-          <div class="metric">MCP + 9%</div>
-        </div>
-        <div class="featured-body">
-          <div class="client">
-            <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a3a5c"/><path d="M6 19V9l4 7 4-7v10" stroke="#5ba3e6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 14.5c0-2.5 1.5-5.5 4.5-5.5 1.5 0 2.5 1 2.5 2.5 0 2-2 3-4.5 3v4.5" stroke="#5ba3e6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Morgan Stanley
-          </div>
-          <h3>Anomaly Detection & Agentic Jira Automation</h3>
-          <p>Built the first scalable anomaly detection pipeline for 10-Q filings with custom OCR. Automated the full Jira ticket lifecycle with agentic AI (MCP + Atlassian) — from creation to deployment, no manual handoffs.</p>
-          <div class="project-tags"><span>Agentic AI</span><span>MCP</span><span>OCR</span><span>Anomaly Detection</span><span>Atlassian</span><span>LLM</span></div>
-        </div>
-      </div>
+<dialog id="book" aria-labelledby="book-title"><div class="dlg">
+  <div class="dlg-top"><div><div class="client">Free, no obligation</div><h3 id="book-title">Book your free consultation</h3></div><button class="x" type="button" data-close aria-label="Close">✕</button></div>
+  <ol class="mini-steps"><li><b>Free 30-minute call.</b> We talk about your business and your data.</li><li><b>Free demo.</b> I show you a small working example of what's possible for you.</li><li><b>Your project</b>, only if you want to go ahead.</li></ol>
+  <div class="cal-wrap"><iframe id="cal" title="Pick a time for your free consultation" data-src="https://calendly.com/cyngarciailabs/30min?hide_gdpr_banner=1&amp;hide_event_type_details=1&amp;primary_color=6247e0" loading="lazy"></iframe></div>
+  <p class="cal-alt">Calendar not loading? <a href="https://calendly.com/cyngarciailabs/30min" target="_blank" rel="noopener">Open the booking page in a new tab ↗</a> or email:</p>
+  <div class="crow"><span class="k">Email</span><span class="v" id="em2">cyngarciailabs@gmail.com</span><button class="btn copy" type="button" data-copy="em2">Copy</button></div>
+</div></dialog>
+<dialog id="dlg" aria-labelledby="dlg-title"><div class="dlg" id="dlg-body"></div></dialog>
 
-      <div class="projects-grid">
-        <div class="project-card fade-in">
-          <div class="project-visual" style="background:linear-gradient(135deg,#1a2a0a,#0a1a0a)"><div class="metric" style="color:var(--accent)">+10%</div></div>
-          <div class="project-body">
-            <div class="client"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a2a0a"/><path d="M8 7h4c4 0 7 3 7 7s-3 7-7 7H8V7z" stroke="#8bc34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13" cy="14" r="2.5" stroke="#8bc34a" stroke-width="1.3"/></svg> Definity Insurance</div>
-            <h3>Fraud Detection Pipeline</h3>
-            <p>Gemini-powered workflow turning quote notes into fraud-risk features. +10% recall, +5% precision. Synthetic data for class imbalance.</p>
-            <div class="project-tags"><span>Vertex AI</span><span>Gemini</span><span>Synthetic Data</span><span>Python</span></div>
-          </div>
-        </div>
+<script>
+(function(){
+var P=[
+ {client:"Jacmar Foodservice (part-time consultant)",title:"Operations automation and dashboards",metric:"25h / wk",color:"warm",tags:["Analytics"],
+  problem:"Seven restaurants ran on manual timecards and reports.",
+  did:["Automated operational workflows with Python and APIs","Built real-time dashboards and budget vs. actual views","Added AI analysis of customer feedback"],
+  stack:["Python","APIs","Reach Reporting"],
+  result:"25 hours a week saved, and bonus achievement rates up 20%."},
+ {client:"Elogia (employer)",title:"Marketing analytics",metric:"+30%",color:"accent",tags:["Analytics"],
+  problem:"Campaign decisions were made without consistent analytics across web properties.",
+  did:["Analysed web analytics across 15 properties","Built 10+ automated dashboards","Implemented recommendation systems"],
+  stack:["Google Analytics","Looker Studio","Python"],
+  result:"Customer engagement up 30%."},
+ {client:"ALGORITHIA / Grupo Salinas (employer)",title:"Financial health detection",metric:"1M+",color:"cool",tags:["NLP"],
+  problem:"Credit profiles and customer complaints held signals that were not being used.",
+  did:["Built a financial health detection system on credit bureau profiles","Applied NLP to social media complaints","Built a ResNet image check for marketing content"],
+  stack:["NLP","ResNet","Python","SQL"],
+  result:"1M+ credit profiles scored, and complaint resolution time reduced by 20%."},
+ {client:"Morgan Stanley (employer)",title:"Security and authorization for an AI metadata platform",metric:"Secure access",color:"cool",tags:["Security"],live:true,
+  problem:"A central platform registers metadata for AI models through APIs for datasets, containers, contracts and semantic models. It needed access control so each user reaches only what they are allowed to see.",
+  did:["Implemented OAuth on-behalf-of (OBO) authentication connecting Snowflake Cortex to Snowflake","Added CSRF protection to the platform","Moved Neo4j graph database credentials to Azure Key Vault","Designed an evaluation skill for semantic models; now designing how Snowflake semantic models map to the platform's registration model"],
+  stack:["OAuth 2.0 OBO","Snowflake Cortex","Azure Key Vault","Neo4j","REST APIs"],
+  result:"Requests carry the end user's identity through to the data layer, and database secrets no longer sit in application configuration. Work spans UI, backend and infrastructure."},
+ {client:"Morgan Stanley (employer)",title:"Trade-level anomaly detection",metric:"10M+ / day",color:"accent",tags:["Fraud & anomaly"],
+  problem:"The Balance Sheet team needed to catch abnormal values at the level of individual trades, across millions of trades a day.",
+  did:["Built time-series models (DeepAR plus statistical methods) in PySpark","Ran the pipeline on Databricks (Azure) with Snowflake as the data layer","Set up a Jenkins CI/CD pipeline for model validation, regression testing and deployment"],
+  stack:["DeepAR","PySpark","Databricks","Snowflake","Jenkins"],
+  result:"The first ML system promoted to full production in the Balance Sheet team, processing 10M+ trades per day and improving data quality by 30%."},
+ {client:"Morgan Stanley (employer)",title:"Agentic Jira automation and 10-Q extraction",metric:"Automated",color:"cool",tags:["Agentic AI"],
+  problem:"Ticket handling took many manual handoffs, and external 10-Q report data was not available in a usable form.",
+  did:["Designed an agentic workflow with MCP across Microsoft Copilot and Jira","Built an OCR and PDF extraction workflow for 10-Q reports"],
+  stack:["MCP","Microsoft Copilot","Jira","OCR"],
+  result:"End-to-end ticket lifecycle automation for the team, and access to 10-Q data that was previously out of reach."},
+ {client:"Definity (3-month contract, 2025)",title:"Fraud investigation agent",metric:"AI agent",color:"warm",tags:["Agentic AI","Fraud & anomaly"],
+  problem:"Investigators in the Special Investigations Unit gather information from several separate sources by hand before they can assess a case.",
+  did:["Built an agent with Google Agent Development Kit (ADK)","Brought the different data sources together in one place for the investigator"],
+  stack:["Google ADK","Gemini","Google Cloud"],
+  result:"An agent that automates case research, so investigators can spend their time on judgement instead of collecting data."},
+ {client:"Definity (intern, 2025)",title:"Early fraud detection model",metric:"+9% AUCPR",color:"accent",tags:["Fraud & anomaly"],
+  problem:"The early-detection model had few confirmed fraud cases to learn from, and useful signal was locked in free-text quote notes.",
+  did:["Built a Gemini on Vertex AI workflow that turns quote notes into a fraud-risk feature","Added proxy labels for deflected quotes and joined external watchlists","Generated synthetic data for class imbalance","Ran a business-rule impact analysis and a bias and fairness analysis of production vs. challenger models"],
+  stack:["Vertex AI","Gemini","Synthetic data","Python"],
+  result:"+9% AUCPR in offline evaluation against a production-features baseline."},
+ {client:"FEMSA / OXXO (employer)",title:"Did the incentive reduce turnover?",metric:"Where it works",color:"pink",tags:["Causal ML"],
+  problem:"An incentive was piloted to reduce employee turnover at six months. The business needed to know whether it worked, not just whether the number moved.",
+  did:["Used propensity scores and Double ML to separate the effect of the incentive from confounders","Compared the effect across groups of stores and employees"],
+  stack:["DoubleML","DoWhy","CausalML","Propensity scores"],
+  result:"A mixed result: the incentive reduced turnover in some places and not in others, which shows where it is worth offering."},
+ {client:"FEMSA / OXXO (employer)",title:"Employee retention models",metric:"330K+",color:"warm",tags:["NLP","Causal ML"],
+  problem:"High turnover across a workforce of 330K+ employees, with the reasons spread over HR records and interview text.",
+  did:["Built attrition risk models on HR data enriched with external INEGI datasets","Ran topic modeling, LLM classification and sentiment analysis on onboarding, stay and exit interviews","Worked with HR and operations to turn findings into retention plans"],
+  stack:["BERTopic","LLMs","Python"],
+  result:"A retention strategy and immediate actions grounded in what employees said and what the data showed."},
+ {client:"Mila research, NeurIPS WiML 2025",title:"Synthetic health records",metric:"45K+",color:"pink",tags:["Research"],
+  problem:"Real patient records are hard to share for research because of privacy.",
+  did:["Developed an Adversarial Random Forest method for generating electronic health records","Built an evaluation framework for data utility and privacy"],
+  stack:["Adversarial Random Forest","PyTorch","Compute Canada"],
+  result:"45,000+ synthetic patient records across 650 variables. Poster accepted at the WiML workshop, NeurIPS 2025.",
+  link:["Read the thesis","https://corpus.ulaval.ca/entities/publication/c41c0a08-ed5b-4b24-adc6-7551e0987acb"]}
+];
+var TAGS=["All","Agentic AI","Fraud & anomaly","Causal ML","Security","NLP","Research","Analytics"];
+var chips=document.getElementById('chips'),cards=document.getElementById('cards'),dlg=document.getElementById('dlg'),body=document.getElementById('dlg-body');
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function block(h,node){var d=el('div');d.appendChild(el('h4','',h));d.appendChild(node);return d}
+function open(p){
+  body.textContent='';
+  var top=el('div','dlg-top'),l=el('div');
+  l.appendChild(el('div','client',p.client+(p.live?' · ongoing':'')));
+  var h=el('h3','',p.title);h.id='dlg-title';l.appendChild(h);
+  var x=el('button','x','✕');x.setAttribute('aria-label','Close');x.onclick=function(){dlg.close()};
+  top.appendChild(l);top.appendChild(x);body.appendChild(top);
+  body.appendChild(block('Problem',el('p','',p.problem)));
+  var ul=el('ul');p.did.forEach(function(d){ul.appendChild(el('li','',d))});body.appendChild(block('What I did',ul));
+  var st=el('div','pills');p.stack.forEach(function(s){st.appendChild(el('span','',s))});body.appendChild(block('Stack',st));
+  body.appendChild(block('Result',el('p','',p.result)));
+  if(p.link){var a=el('a','',p.link[0]+' ↗');a.href=p.link[1];a.target='_blank';a.rel='noopener';body.appendChild(a)}
+  if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');
+}
+dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close()});
+var empty=el('p','empty','No projects in this area yet.');empty.hidden=true;
+P.forEach(function(p){
+  var b=el('button','card');b.type='button';b._p=p;
+  var m=el('div','metric',p.metric);m.style.color='var(--'+p.color+')';b.appendChild(m);
+  var c=el('div','client',p.client);if(p.live)c.appendChild(el('span','live','ongoing'));b.appendChild(c);
+  b.appendChild(el('h3','',p.title));b.appendChild(el('div','more','Details →'));
+  b.onclick=function(){open(p)};cards.appendChild(b);
+});
+cards.appendChild(empty);
+function filter(t){
+  var n=0;
+  Array.prototype.forEach.call(cards.querySelectorAll('.card'),function(b){var show=t==='All'||b._p.tags.indexOf(t)>-1;b.hidden=!show;if(show)n++});
+  empty.hidden=n>0;
+  Array.prototype.forEach.call(chips.children,function(c){c.setAttribute('aria-pressed',c._t===t?'true':'false')});
+}
+TAGS.forEach(function(t){var c=el('button','chip',t);c._t=t;c.type='button';c.onclick=function(){filter(t)};chips.appendChild(c)});
+filter('All');
+Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'),function(b){
+  b.onclick=function(){
+    var node=document.getElementById(b.getAttribute('data-copy')),txt=node.textContent;
+    function sel(){var r=document.createRange();r.selectNodeContents(node);var s=getSelection();s.removeAllRanges();s.addRange(r)}
+    try{navigator.clipboard.writeText(txt).then(function(){var fr=document.documentElement.lang==='fr';b.textContent=fr?'Copié':'Copied';setTimeout(function(){b.textContent=fr?'Copier':'Copy'},1500)},sel)}catch(e){sel()}
+  };
+});
+})();
+</script>
 
-        <div class="project-card fade-in">
-          <div class="project-visual" style="background:linear-gradient(135deg,#0a1a2a,#0a0a2a)"><div class="metric" style="color:var(--cool)">1M+</div></div>
-          <div class="project-body">
-            <div class="client"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a2a1a"/><path d="M14 6v16M8 10c0 0 3-2 6-2s6 2 6 2" stroke="#4caf50" stroke-width="1.8" stroke-linecap="round"/><path d="M8 18c0 0 3 2 6 2s6-2 6-2" stroke="#4caf50" stroke-width="1.8" stroke-linecap="round"/><circle cx="14" cy="14" r="2" fill="#4caf50"/></svg> ALGORITHIA, Grupo Salinas</div>
-            <h3>Financial Health Detection</h3>
-            <p>Built Mexico's first financial health detection system on 1M+ credit profiles. NLP on social data cut complaint resolution by 20%.</p>
-            <div class="project-tags"><span>NLP</span><span>ResNet</span><span>Python</span><span>SQL</span></div>
-          </div>
-        </div>
+<script>
+(function(){
+var ids=['home','services','how','results','about','contact'];
+var links=document.querySelectorAll('#tabs a');
+function show(){
+  var id=(location.hash||'#home').slice(1);if(ids.indexOf(id)<0)id='home';
+  ids.forEach(function(x){document.getElementById(x).hidden=(x!==id)});
+  Array.prototype.forEach.call(links,function(a){
+    if(a.getAttribute('href')==='#'+id){a.setAttribute('aria-current','page');try{a.scrollIntoView({block:'nearest',inline:'center'})}catch(e){}}
+    else a.removeAttribute('aria-current');
+  });
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',show);show();
 
-        <div class="project-card fade-in">
-          <div class="project-visual" style="background:linear-gradient(135deg,#2a0a1a,#1a0a2a)"><div class="metric" style="color:var(--pink)">45K+</div></div>
-          <div class="project-body">
-            <div class="client"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a2a2a"/><circle cx="10" cy="10" r="3" stroke="#4dd0e1" stroke-width="1.5"/><circle cx="18" cy="10" r="3" stroke="#4dd0e1" stroke-width="1.5"/><circle cx="14" cy="18" r="3" stroke="#4dd0e1" stroke-width="1.5"/><path d="M12 12l2 3M16 12l-2 3" stroke="#4dd0e1" stroke-width="1.2"/></svg> Mila - Quebec AI Institute / NeurIPS Workshop 2025</div>
-            <h3>Synthetic Health Records Generation</h3>
-            <p>Adversarial Random Forest generating 45K+ patient records across 650 variables. Poster accepted at the WiML workshop, NeurIPS 2025.</p>
-            <div class="project-tags"><span>ARF</span><span>Privacy AI</span><span>PyTorch</span><span>Research</span></div>
-            <a href="https://corpus.ulaval.ca/entities/publication/c41c0a08-ed5b-4b24-adc6-7551e0987acb" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.85rem;font-weight:500;color:var(--accent)">📄 Read Thesis →</a>
-          </div>
-        </div>
+var book=document.getElementById('book'),cal=document.getElementById('cal');
+function openBook(e){e.preventDefault();if(!cal.src)cal.src=cal.getAttribute('data-src');if(book.showModal)book.showModal();else book.setAttribute('open','');}
+Array.prototype.forEach.call(document.querySelectorAll('a.book'),function(a){a.addEventListener('click',openBook)});
+book.querySelector('[data-close]').onclick=function(){book.close()};
+book.addEventListener('click',function(e){if(e.target===book)book.close()});
+})();
+</script>
 
-        <div class="project-card fade-in">
-          <div class="project-visual" style="background:linear-gradient(135deg,#1a1a0a,#0a1a1a)"><div class="metric" style="color:var(--warm)">25h/wk</div></div>
-          <div class="project-body">
-            <div class="client"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a1a2a"/><path d="M12 8v8c0 3-2 4-4 4" stroke="#60a0f0" stroke-width="2" stroke-linecap="round"/><path d="M16 8l3 6 3-6" stroke="#60a0f0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 14v6M22 14v6" stroke="#60a0f0" stroke-width="1.5" stroke-linecap="round"/></svg> Jacmar Foodservice Distribution</div>
-            <h3>Operations Automation & Dashboards</h3>
-            <p>Automated workflows saving 25 hours/week across 7 restaurants. Real-time dashboards lifted bonus rates by 20%.</p>
-            <div class="project-tags"><span>Python</span><span>APIs</span><span>Dashboards</span><span>AI</span></div>
-          </div>
-        </div>
-
-        <div class="project-card fade-in">
-          <div class="project-visual" style="background:linear-gradient(135deg,#2a1a0a,#1a0a1a)"><div class="metric" style="color:var(--warm)">+30%</div></div>
-          <div class="project-body">
-            <div class="client"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a0a2a"/><path d="M8 8h8M8 14h6M8 20h8M8 8v12" stroke="#a070e0" stroke-width="2" stroke-linecap="round"/><circle cx="21" cy="14" r="3" stroke="#a070e0" stroke-width="1.3"/></svg> Elogia (Viko Group)</div>
-            <h3>Marketing Campaign Analytics</h3>
-            <p>Lifted campaign engagement by 30% through data-driven audience segmentation and A/B testing.</p>
-            <div class="project-tags"><span>Analytics</span><span>Marketing</span><span>Segmentation</span><span>A/B Testing</span></div>
-          </div>
-        </div>
-
-        <div class="project-card fade-in">
-          <div class="project-visual" style="background:linear-gradient(135deg,#1a0a2a,#2a0a1a)"><div class="metric" style="color:var(--cool)">BERTopic</div></div>
-          <div class="project-body">
-            <div class="client"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#2a0a0a"/><path d="M8 8h7M8 14h5M8 20h3M8 8v12" stroke="#e05050" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="14" r="4" stroke="#e05050" stroke-width="1.5"/><path d="M20 11v6" stroke="#e05050" stroke-width="1.3" stroke-linecap="round"/></svg> FEMSA (OXXO)</div>
-            <h3>Employee Retention Predictive Models</h3>
-            <p>Predictive models for employee turnover across 330K+ employees. Topic modeling on interviews drove retention strategy.</p>
-            <div class="project-tags"><span>BERTopic</span><span>NLP</span><span>Causal Forest</span><span>Prediction</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- TECH STACK -->
-  <section id="stack">
-    <div class="container">
-      <div class="section-tag fade-in">Tech Stack</div>
-      <h2 class="section-title fade-in">Tools & Technologies</h2>
-      <div class="tech-categories fade-in">
-        <div class="tech-cat"><h3>Languages</h3><div class="tech-pills"><span>Python</span><span>SQL</span><span>R</span><span>MATLAB</span><span>JavaScript</span><span>Visual Basic</span></div></div>
-        <div class="tech-cat"><h3>AI / ML Frameworks</h3><div class="tech-pills"><span>PyTorch</span><span>Scikit-learn</span><span>BERTopic</span><span>LLMs</span><span>SHAP</span><span>ResNet</span><span>Agentic AI</span><span>MCP</span></div></div>
-        <div class="tech-cat"><h3>Data Platforms</h3><div class="tech-pills"><span>Snowflake</span><span>Google Cloud</span><span>Vertex AI</span><span>Databricks</span><span>Compute Canada</span></div></div>
-        <div class="tech-cat"><h3>Analytics & Viz</h3><div class="tech-pills"><span>Looker Studio</span><span>Streamlit</span><span>Google Analytics</span><span>Reach Reporting</span></div></div>
-        <div class="tech-cat"><h3>DevOps & MLOps</h3><div class="tech-pills"><span>Git</span><span>Docker</span><span>CI/CD</span><span>MLflow</span><span>APIs</span><span>Jira</span><span>Atlassian</span></div></div>
-        <div class="tech-cat"><h3>Languages Spoken</h3><div class="tech-pills"><span>🇲🇽 Spanish — Native</span><span>🇬🇧 English — Advanced</span><span>🇫🇷 French — Intermediate</span></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section id="experience" style="background: var(--surface);">
-    <div class="container">
-      <div class="section-tag fade-in">Career Path</div>
-      <h2 class="section-title fade-in">Experience</h2>
-      <div class="timeline fade-in">
-
-        <div class="timeline-item current">
-          <div class="timeline-date">Dec 2025 – Present</div>
-          <div class="timeline-role">Data Scientist</div>
-          <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a3a5c"/><path d="M6 19V9l4 7 4-7v10" stroke="#5ba3e6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 14.5c0-2.5 1.5-5.5 4.5-5.5 1.5 0 2.5 1 2.5 2.5 0 2-2 3-4.5 3v4.5" stroke="#5ba3e6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Morgan Stanley — Montreal</div>
-          <div class="timeline-company-desc">Global leader in financial services, investment banking, and wealth management</div>
-          <div class="timeline-desc">Anomaly detection on 10-Q filings with custom OCR. Automated the Jira ticket lifecycle with agentic AI (MCP + Atlassian).</div>
-        </div>
-
-        <div class="timeline-item current">
-          <div class="timeline-date">Nov 2025 – Present</div>
-          <div class="timeline-role">Data Scientist (Contract)</div>
-          <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#2a0a0a"/><path d="M8 8h7M8 14h5M8 20h3M8 8v12" stroke="#e05050" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="14" r="4" stroke="#e05050" stroke-width="1.5"/><path d="M20 11v6" stroke="#e05050" stroke-width="1.3" stroke-linecap="round"/></svg> FEMSA (OXXO) — Mexico</div>
-          <div class="timeline-company-desc">Latin America's largest convenience store chain with 20,000+ locations</div>
-          <div class="timeline-desc">Causal Forest turnover models across 330K+ employees. NLP on interviews with BERTopic.</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-date">May 2025 – Nov 2025</div>
-          <div class="timeline-role">Data Scientist (Contract)</div>
-          <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a2a0a"/><path d="M8 7h4c4 0 7 3 7 7s-3 7-7 7H8V7z" stroke="#8bc34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13" cy="14" r="2.5" stroke="#8bc34a" stroke-width="1.3"/></svg> Definity — Montreal</div>
-          <div class="timeline-company-desc">One of Canada's leading property and casualty insurance companies</div>
-          <div class="timeline-desc">Fraud detection with Gemini on Vertex AI. Synthetic data generation. +9% AUCPR lift.</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-date">Mar 2025 – May 2025</div>
-          <div class="timeline-role">Data Scientist (Intern)</div>
-          <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#2a1a0a"/><path d="M7 9v10M7 14h6M13 9v10" stroke="#e05020" stroke-width="1.8" stroke-linecap="round"/><path d="M16 14l3-5 3 5-3 5-3-5z" stroke="#e05020" stroke-width="1.5" stroke-linejoin="round"/></svg> Honeywell — Mexico</div>
-          <div class="timeline-company-desc">Fortune 100 technology and manufacturing multinational</div>
-          <div class="timeline-desc">ML pipeline for supply chain lead time prediction. SHAP interpretability.</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-date">Feb 2025 – Aug 2025</div>
-          <div class="timeline-role">Data Consultant</div>
-          <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a1a2a"/><path d="M12 8v8c0 3-2 4-4 4" stroke="#60a0f0" stroke-width="2" stroke-linecap="round"/><path d="M16 8l3 6 3-6" stroke="#60a0f0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 14v6M22 14v6" stroke="#60a0f0" stroke-width="1.5" stroke-linecap="round"/></svg> Jacmar Foodservice Distribution</div>
-          <div class="timeline-company-desc">Multi-brand foodservice distributor operating 7+ restaurant locations across the US</div>
-          <div class="timeline-desc">Automated workflows saving 25h/week. Dashboards for 7 restaurants. AI feedback analysis.</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-date">2024</div>
-          <div class="timeline-role">Marketing Data Analyst</div>
-          <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a0a2a"/><path d="M8 8h8M8 14h6M8 20h8M8 8v12" stroke="#a070e0" stroke-width="2" stroke-linecap="round"/><circle cx="21" cy="14" r="3" stroke="#a070e0" stroke-width="1.3"/></svg> Elogia (Viko Group) — Mexico</div>
-          <div class="timeline-company-desc">Award-winning digital commerce marketing agency across Spain & LATAM</div>
-          <div class="timeline-desc">+30% engagement through data-driven campaigns, segmentation, and A/B testing.</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-date">Jan 2023 – Jul 2025</div>
-          <div class="timeline-role">Master's Researcher</div>
-          <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a2a2a"/><circle cx="10" cy="10" r="3" stroke="#4dd0e1" stroke-width="1.5"/><circle cx="18" cy="10" r="3" stroke="#4dd0e1" stroke-width="1.5"/><circle cx="14" cy="18" r="3" stroke="#4dd0e1" stroke-width="1.5"/><path d="M12 12l2 3M16 12l-2 3" stroke="#4dd0e1" stroke-width="1.2"/></svg> Mila - Quebec AI Institute / Université Laval</div>
-          <div class="timeline-company-desc">Canada's premier AI research institute</div>
-          <div class="timeline-desc">Synthetic EHR generation. Poster accepted at the WiML workshop, NeurIPS 2025.</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-date">Jan 2022 – Jul 2024</div>
-          <div class="timeline-role">Data Scientist</div>
-          <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#0a2a1a"/><path d="M14 6v16M8 10c0 0 3-2 6-2s6 2 6 2" stroke="#4caf50" stroke-width="1.8" stroke-linecap="round"/><path d="M8 18c0 0 3 2 6 2s6-2 6-2" stroke="#4caf50" stroke-width="1.8" stroke-linecap="round"/><circle cx="14" cy="14" r="2" fill="#4caf50"/></svg> ALGORITHIA, Grupo Salinas — Mexico</div>
-          <div class="timeline-company-desc">AI lab within Grupo Salinas — banking, retail, telecom, and media conglomerate</div>
-          <div class="timeline-desc">Financial health detection (1M+ profiles). NLP for complaints. ResNet for marketing QA.</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-date">Apr 2019 – May 2021</div>
-          <div class="timeline-role">Finance Analyst</div>
-          <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a1a0a"/><rect x="8" y="8" width="12" height="12" rx="2" stroke="#fdd835" stroke-width="1.5"/><path d="M11 14h6M14 11v6" stroke="#fdd835" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="14" r="5.5" stroke="#fdd835" stroke-width="1" stroke-dasharray="2 2"/></svg> Valmer, Mexican Stock Exchange</div>
-          <div class="timeline-company-desc">Mexico's leading financial valuation and pricing company for the stock exchange</div>
-          <div class="timeline-desc">Structured note valuation. Monte Carlo optimization (50% runtime reduction).</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-date">Jun 2018 – Jan 2019</div>
-          <div class="timeline-role">Intern, Budget Analysis</div>
-          <div class="timeline-company"><svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a1a0a"/><rect x="8" y="8" width="12" height="12" rx="2" stroke="#fdd835" stroke-width="1.5"/><path d="M11 14h6M14 11v6" stroke="#fdd835" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="14" r="5.5" stroke="#fdd835" stroke-width="1" stroke-dasharray="2 2"/></svg> Central Bank of Mexico (Banxico)</div>
-          <div class="timeline-company-desc">Mexico's central bank responsible for monetary policy and financial stability</div>
-          <div class="timeline-desc">Time series budget forecasting. +85% accuracy improvement.</div>
-        </div>
-
-      </div>
-    </div>
-  </section> 
-
-  <!-- EDUCATION -->
-  <section>
-    <div class="container">
-      <div class="section-tag fade-in">Education</div>
-      <h2 class="section-title fade-in">Academic Background</h2>
-      <div class="edu-grid fade-in">
-        <div class="edu-card">
-          <div class="degree">M.Sc. Computer Science (Research)</div>
-          <div class="school">Mila - Quebec AI Institute / Université Laval</div>
-          <div class="thesis">Thesis: "Adversarial Random Forest for Synthetic Electronic Health Records Generation"</div>
-          <a href="https://corpus.ulaval.ca/entities/publication/c41c0a08-ed5b-4b24-adc6-7551e0987acb" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.75rem;font-size:.85rem;font-weight:500;color:var(--accent)">📄 Read Thesis →</a>
-        </div>
-        <div class="edu-card">
-          <div class="degree">B.Sc. Actuarial Science</div>
-          <div class="school">Universidad Nacional Autónoma de México (UNAM)</div>
-          <div class="thesis">Thesis: "Game Theory: An Application to Housing Credit"</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="contact-section">
-    <div class="container">
-      <div class="section-tag fade-in">Let's Work Together</div>
-      <h2 class="section-title fade-in">Get in Touch</h2>
-      <p class="fade-in">Looking for an AI/ML expert who ships measurable results — as a consultant or full-time? Let's talk about your next project.</p>
-      <div class="contact-links fade-in">
-        <a href="/cdn-cgi/l/email-protection#0e6d7760516038384e6d676b606d676f7d207b606f63206376" class="contact-btn primary">✉ Email Me</a>
-        <a href="https://www.linkedin.com/in/cynthiagarciaybarra/" target="_blank" rel="noopener" class="contact-btn secondary">in LinkedIn</a>
-        <a href="tel:+13673809835" class="contact-btn secondary">📞 +1 (367) 380-9835</a>
-      </div>
-    </div>
-  </section>
-
-  <footer><div class="container"><p>© 2025 Cynthia García Ybarra — Montreal, Canada</p></div></footer>
-
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-  <script>
-    (function(){
-      var e=document.querySelectorAll('.fade-in');
-      if(!('IntersectionObserver' in window)){e.forEach(function(el){el.classList.add('visible')});return}
-      var o=new IntersectionObserver(function(entries){
-        entries.forEach(function(entry,i){
-          if(entry.isIntersecting){setTimeout(function(){entry.target.classList.add('visible')},i*100);o.unobserve(entry.target)}
-        });
-      },{threshold:0.15});
-      e.forEach(function(el){o.observe(el)});
-    })();
-  </script>
-</body>
-</html> 
+<script>
+(function(){
+var FR={"2025 · 3 months": "2025 · 3 mois", "Definity (3-month contract, 2025)": "Definity (contrat de 3 mois, 2025)", "2026 · 3 months": "2026 · 3 mois", "Data Scientist (Contract)": "Scientifique des données (contrat)", "· Definity, Montreal": "· Definity, Montréal", "Data Scientist (Intern)": "Scientifique des données (stagiaire)", "May 2025 – Nov 2025": "mai 2025 – nov. 2025", "Since Dec 2025": "Depuis déc. 2025", "Since Nov 2025": "Depuis nov. 2025", "Fraud investigation agent built with Google ADK that brings several data sources together for the Special Investigations Unit.": "Agent d'enquête sur la fraude conçu avec Google ADK, qui rassemble plusieurs sources de données pour l'Unité des enquêtes spéciales.", "Refresh of the claims fraud model across two claims data sources.": "Mise à jour du modèle de fraude sur les réclamations à partir de deux sources de données.", "Gemini on Vertex AI workflow turning quote notes into a fraud-risk feature.": "Flux Gemini sur Vertex AI qui transforme les notes de soumission en indicateur de risque de fraude.", "Rebuilt the early-detection model: +9% AUCPR in offline evaluation against a production-features baseline.": "Refonte du modèle de détection précoce : +9 % d'AUCPR en évaluation hors ligne par rapport à une référence basée sur les variables en production.", "Synthetic data for class imbalance, business-rule impact analysis, and a bias and fairness analysis.": "Données synthétiques pour le déséquilibre des classes, analyse d'impact des règles d'affaires, et analyse des biais et de l'équité.", "Definity (3-month contract, 2026)": "Definity (contrat de 3 mois, 2026)", "Definity (intern, 2025)": "Definity (stage, 2025)", "AI agent": "Agent IA", "Built an agent with Google Agent Development Kit (ADK)": "Conception d'un agent avec Google Agent Development Kit (ADK)", "Brought the different data sources together in one place for the investigator": "Regroupement des différentes sources de données en un seul endroit pour l'enquêteur", "An agent that automates case research, so investigators can spend their time on judgement instead of collecting data.": "Un agent qui automatise la recherche sur les dossiers, pour que les enquêteurs consacrent leur temps au jugement plutôt qu'à la collecte de données.", "+9% AUCPR in offline evaluation against a production-features baseline.": "+9 % d'AUCPR en évaluation hors ligne par rapport à une référence basée sur les variables en production.", "M.Sc. Mila / Université Laval": "M. Sc. Mila / Université Laval", "+30%": "+30 %", "20%": "20 %", "+9% AUCPR": "+9 % AUCPR", "Home": "Accueil", "How it works": "Comment ça marche", "Results": "Résultats", "About": "À propos", "Book a free call": "Réserver un appel gratuit", "Available for new projects": "Ouverte aux nouveaux projets", "Make your data": "Faites fructifier", "pay off": "vos données", "I help businesses find where to cut costs and where to grow, using AI and clear visualizations that show exactly what to act on. I also make sure your data is secure and well organized, so you can trust the numbers behind your decisions.": "J'aide les entreprises à repérer où réduire leurs coûts et où croître, grâce à l'IA et à des visualisations claires qui montrent exactement sur quoi agir. Je m'assure aussi que vos données sont sécurisées et bien organisées, pour que vous puissiez vous fier aux chiffres derrière vos décisions.", "Montreal, Canada": "Montréal, Canada", "6+ years in data & AI": "6+ ans en données et IA", "Spanish · English · French": "Espagnol · anglais · français", "Book a free consultation": "Réserver une consultation gratuite", "Free 30-minute consultation": "Consultation gratuite de 30 minutes", "Free demo for your business": "Démo gratuite pour votre entreprise", "or email": "ou par courriel", "25h": "25\u202fh", "Manual work saved per week": "Travail manuel épargné par semaine", "Customer engagement": "Engagement client", "Faster complaint resolution": "Plaintes résolues plus vite", "Years in data & AI": "Ans en données et IA", "What I can do for you": "Ce que je peux faire pour vous", "Practical ways to make your data save money, earn money, or simply work better.": "Des façons concrètes de faire économiser ou rapporter de l'argent à vos données, ou simplement de mieux travailler.", "Cut costs and automate busywork": "Réduire les coûts et automatiser les tâches répétitives", "Automate reports, timecards and repetitive tasks so your team gets hours back every week.": "Automatisez les rapports, les feuilles de temps et les tâches répétitives pour redonner des heures à votre équipe chaque semaine.", "See what drives your business": "Voir ce qui fait avancer votre entreprise", "Dashboards and analysis that show which customers, products and channels matter most, and what to do next.": "Des tableaux de bord et des analyses qui montrent quels clients, produits et canaux comptent le plus, et quoi faire ensuite.", "Know what actually works": "Savoir ce qui fonctionne vraiment", "Find out whether a promotion, incentive or change really caused the result, and for whom, before you spend more on it.": "Découvrez si une promotion, un incitatif ou un changement a vraiment produit le résultat, et pour qui, avant d'y investir davantage.", "Spot fraud and unusual activity": "Détecter la fraude et les activités inhabituelles", "Catch risky transactions and anomalies early, before they turn into losses.": "Repérez tôt les transactions à risque et les anomalies, avant qu'elles ne se transforment en pertes.", "AI assistants for your team": "Des assistants IA pour votre équipe", "AI tools that read documents, pull information from several sources together and handle multi-step work.": "Des outils d'IA qui lisent des documents, rassemblent l'information de plusieurs sources et prennent en charge des tâches en plusieurs étapes.", "Clean, secure data you can trust": "Des données propres et sécurisées, dignes de confiance", "Well-organized data pipelines with the right access controls, including privacy-safe synthetic data for testing.": "Des pipelines de données bien organisés avec les bons contrôles d'accès, y compris des données synthétiques respectueuses de la vie privée pour les tests.", "Free consultation, then a free demo.": "Consultation gratuite, puis démo gratuite.", "From first call to results": "Du premier appel aux résultats", "You see what's possible before you commit to anything.": "Vous voyez ce qui est possible avant de vous engager à quoi que ce soit.", "Free 30-minute call": "Appel gratuit de 30 minutes", "Tell me about your business and your data. Together we pick the questions worth answering.": "Parlez-moi de votre entreprise et de vos données. Ensemble, nous choisissons les questions qui valent la peine d'être explorées.", "Free demo": "Démo gratuite", "I show you a small working example of what's possible, built on a sample of your data or on example data, so you can judge the value first.": "Je vous montre un petit exemple concret de ce qui est possible, à partir d'un échantillon de vos données ou de données d'exemple, pour que vous puissiez d'abord en juger la valeur.", "Your project": "Votre projet", "We agree on a clear scope, timeline and price. I build it, deliver it and show your team how to use it.": "Nous convenons d'une portée, d'un échéancier et d'un prix clairs. Je le réalise, je le livre et je montre à votre équipe comment l'utiliser.", "Start with step 1.": "Commencez par l'étape 1.", "Proof of impact": "Preuves d'impact", "Selected results": "Résultats choisis", "Projects from my work as an employee and consultant. Open one for the problem, what I did and the result.": "Projets réalisés comme employée et comme consultante. Ouvrez-en un pour voir le problème, ce que j'ai fait et le résultat.", "All": "Tous", "Agentic AI": "IA agentique", "Fraud & anomaly": "Fraude et anomalies", "Causal ML": "ML causal", "Security": "Sécurité", "NLP": "Traitement du langage", "Research": "Recherche", "Analytics": "Analytique", "25h / wk": "25 h / sem.", "Jacmar Foodservice (part-time consultant)": "Jacmar Foodservice (consultante à temps partiel)", "Operations automation and dashboards": "Automatisation des opérations et tableaux de bord", "Details →": "Détails →", "Elogia (employer)": "Elogia (employeur)", "Marketing analytics": "Analytique marketing", "ALGORITHIA / Grupo Salinas (employer)": "ALGORITHIA / Grupo Salinas (employeur)", "Financial health detection": "Détection de la santé financière", "Secure access": "Accès sécurisé", "Morgan Stanley (employer)": "Morgan Stanley (employeur)", "ongoing": "en cours", "Security and authorization for an AI metadata platform": "Sécurité et autorisation d'une plateforme de métadonnées d'IA", "10M+ / day": "10M+ / jour", "Trade-level anomaly detection": "Détection d'anomalies au niveau des transactions", "Automated": "Automatisé", "Agentic Jira automation and 10-Q extraction": "Automatisation agentique de Jira et extraction de 10-Q", "In progress": "En cours", "Definity (employer)": "Definity (employeur)", "Fraud investigation agent": "Agent d'enquête sur la fraude", "Early fraud detection model": "Modèle de détection précoce de la fraude", "Where it works": "Là où ça marche", "FEMSA / OXXO (employer)": "FEMSA / OXXO (employeur)", "Did the incentive reduce turnover?": "L'incitatif a-t-il réduit le roulement?", "Employee retention models": "Modèles de rétention des employés", "Mila research, NeurIPS WiML 2025": "Recherche à Mila, NeurIPS WiML 2025", "Synthetic health records": "Dossiers de santé synthétiques", "No projects in this area yet.": "Aucun projet dans ce domaine pour l'instant.", "Background": "Parcours", "6+ years working with data, from finance and actuarial work to production AI in finance, insurance, retail and healthcare. Open a role for details.": "Plus de 6 ans à travailler avec les données, de la finance et de l'actuariat jusqu'à l'IA en production en finance, en assurance, dans le commerce de détail et en santé. Ouvrez un poste pour les détails.", "Experience": "Expérience", "Jul 2026 – Present": "juil. 2026 – aujourd'hui", "Data Scientist": "Scientifique des données", "· Definity, Montreal (intern May – Nov 2025)": "· Definity, Montréal (stagiaire mai – nov. 2025)", "Since Jul 2026: fraud investigation agent built with Google ADK that brings several data sources together for the Special Investigations Unit.": "Depuis juil. 2026 : agent d'enquête sur la fraude conçu avec Google ADK, qui rassemble plusieurs sources de données pour l'Unité des enquêtes spéciales.", "Since Jul 2026: refresh of the claims fraud model across two claims data sources.": "Depuis juil. 2026 : mise à jour du modèle de fraude sur les réclamations à partir de deux sources de données.", "May – Nov 2025 (intern): Gemini on Vertex AI workflow turning quote notes into a fraud-risk feature.": "Mai – nov. 2025 (stage) : flux Gemini sur Vertex AI qui transforme les notes de soumission en indicateur de risque de fraude.", "May – Nov 2025 (intern): rebuilt the early-detection model, +9% AUCPR in offline evaluation against a production-features baseline.": "Mai – nov. 2025 (stage) : refonte du modèle de détection précoce, +9 % d'AUCPR en évaluation hors ligne par rapport à une référence basée sur les variables en production.", "May – Nov 2025 (intern): synthetic data for class imbalance, business-rule impact analysis, and a bias and fairness analysis.": "Mai – nov. 2025 (stage) : données synthétiques pour le déséquilibre des classes, analyse d'impact des règles d'affaires, et analyse des biais et de l'équité.", "Dec 2025 – Present": "déc. 2025 – aujourd'hui", "· Morgan Stanley, Montreal": "· Morgan Stanley, Montréal", "Security and authorization for an enterprise metadata platform for AI models, across UI, backend and infrastructure.": "Sécurité et autorisation d'une plateforme d'entreprise de métadonnées pour modèles d'IA, de l'interface au backend et à l'infrastructure.", "Trade-level anomaly detection with DeepAR and statistical models in PySpark on Databricks, over 10M+ trades per day.": "Détection d'anomalies au niveau des transactions avec DeepAR et des modèles statistiques en PySpark sur Databricks, sur plus de 10 M de transactions par jour.", "Agentic Jira ticket automation with MCP, Jenkins CI/CD for model releases, and OCR extraction of 10-Q data.": "Automatisation agentique des billets Jira avec MCP, CI/CD Jenkins pour les mises en production de modèles, et extraction OCR des données 10-Q.", "Nov 2025 – Present": "nov. 2025 – aujourd'hui", "Data Specialist (Project)": "Spécialiste des données (projet)", "· FEMSA (OXXO), Mexico": "· FEMSA (OXXO), Mexique", "Causal analysis of an incentive pilot on 6-month employee turnover.": "Analyse causale d'un projet pilote d'incitatif sur le roulement du personnel à 6 mois.", "Payments and compensation analyses; attrition models and NLP on employee interviews across 330K+ employees.": "Analyses de paie et de rémunération; modèles d'attrition et traitement du langage sur les entrevues de plus de 330 000 employés.", "Daily monitoring of Azure Data Factory pipelines for sales, promotions and transactions.": "Surveillance quotidienne des pipelines Azure Data Factory pour les ventes, les promotions et les transactions.", "Feb 2025 – Aug 2025": "févr. 2025 – août 2025", "Data Consultant (Part-time)": "Consultante en données (temps partiel)", "· Jacmar Foodservice Distribution, Montreal": "· Jacmar Foodservice Distribution, Montréal", "Automated workflows saving 25 hours a week, real-time dashboards for 7 restaurants, and AI analysis of customer feedback.": "Flux de travail automatisés qui épargnent 25 heures par semaine, tableaux de bord en temps réel pour 7 restaurants et analyse par IA des commentaires des clients.", "Mar 2025 – May 2025": "mars 2025 – mai 2025", "Data Scientist (Consultant)": "Scientifique des données (consultante)", "· Honeywell, Mexico": "· Honeywell, Mexique", "ML pipeline for supply chain lead time prediction on Snowflake data (5% accuracy improvement), with SHAP for interpretability.": "Pipeline de ML pour prédire les délais de la chaîne d'approvisionnement sur des données Snowflake (précision améliorée de 5 %), avec SHAP pour l'interprétabilité.", "Earlier experience, 2018 – 2025": "Expérience antérieure, 2018 – 2025", "Jan 2023 – Jul 2025": "janv. 2023 – juil. 2025", "Master's Thesis Research": "Recherche de mémoire de maîtrise", "· Mila – Quebec AI Institute / Université Laval": "· Mila – Institut québécois d'intelligence artificielle / Université Laval", "Synthetic electronic health records with Adversarial Random Forests: 45,000+ patient records, 650 variables. Poster at the WiML workshop, NeurIPS 2025.": "Dossiers de santé électroniques synthétiques avec des Adversarial Random Forests : plus de 45 000 dossiers de patients, 650 variables. Affiche à l'atelier WiML, NeurIPS 2025.", "Nov 2024 – Jan 2025": "nov. 2024 – janv. 2025", "Research Assistant": "Assistante de recherche", "· DataSphere Lab, McGill University": "· DataSphere Lab, Université McGill", "Synthetic data pipeline for structured and NLP data, benchmarking five generative models, with a Streamlit dashboard for data quality assessment.": "Pipeline de données synthétiques pour des données structurées et textuelles, comparant cinq modèles génératifs, avec un tableau de bord Streamlit pour évaluer la qualité des données.", "Jan 2022 – Jul 2024": "janv. 2022 – juil. 2024", "· ALGORITHIA, Grupo Salinas, Mexico": "· ALGORITHIA, Grupo Salinas, Mexique", "Financial health detection on 1M+ credit profiles, NLP on social media complaints (20% faster resolution), and ResNet image quality checks for marketing.": "Détection de la santé financière sur plus de 1 M de profils de crédit, traitement du langage sur les plaintes dans les médias sociaux (résolution 20 % plus rapide) et contrôle de la qualité des images marketing avec ResNet.", "Nov 2021 – Jan 2022": "nov. 2021 – janv. 2022", "Data Analyst": "Analyste de données", "· NTT DATA, Mexico": "· NTT DATA, Mexique", "Key Risk Indicators (booking controls) for Citi Banamex, including two new indicators for transaction monitoring.": "Indicateurs de risque clés (contrôles des inscriptions) pour Citi Banamex, dont deux nouveaux indicateurs de surveillance des transactions.", "May 2021 – Nov 2021": "mai 2021 – nov. 2021", "Web analytics across 15 properties, 10+ automated dashboards, and recommendation systems that lifted engagement by 30%.": "Analytique Web sur 15 sites, plus de 10 tableaux de bord automatisés et des systèmes de recommandation qui ont augmenté l'engagement de 30 %.", "Apr 2019 – May 2021": "avr. 2019 – mai 2021", "Finance Analyst": "Analyste financière", "· Valmer, Mexican Stock Exchange": "· Valmer, Bourse mexicaine", "Structured note valuation models and a Monte Carlo re-engineering that cut runtime by 50%.": "Modèles d'évaluation de billets structurés et refonte d'une simulation Monte-Carlo qui a réduit le temps de calcul de 50 %.", "Jun 2018 – Jan 2019": "juin 2018 – janv. 2019", "Intern, Budget Analysis": "Stagiaire, analyse budgétaire", "· Central Bank of Mexico (Banxico)": "· Banque centrale du Mexique (Banxico)", "Statistical analysis of the bank's 2009–2018 budget and time series forecasting.": "Analyse statistique du budget 2009–2018 de la banque et prévisions par séries chronologiques.", "Education": "Formation", "M.Sc. Computer Science (Research)": "M. Sc. en informatique (recherche)", "Mila – Quebec AI Institute / Université Laval": "Mila – Institut québécois d'intelligence artificielle / Université Laval", "Thesis: \"Adversarial Random Forest for Synthetic Electronic Health Records Generation\"": "Mémoire : « Adversarial Random Forest for Synthetic Electronic Health Records Generation »", "Read thesis ↗": "Lire le mémoire ↗", "B.Sc. Actuarial Science": "B. Sc. en actuariat", "Thesis: \"Game Theory: An Application to Housing Credit\"": "Thèse : « Théorie des jeux : une application au crédit hypothécaire »", "Tools & technologies": "Outils et technologies", "Languages": "Langages", "Security & platform": "Sécurité et plateforme", "CSRF protection": "Protection CSRF", "Data platforms": "Plateformes de données", "Get in touch": "Me joindre", "Let's talk about your data": "Parlons de vos données", "Tell me what you're working with and what you'd like to improve. The first 30-minute call is free, with no obligation.": "Dites-moi avec quoi vous travaillez et ce que vous aimeriez améliorer. Le premier appel de 30 minutes est gratuit et sans engagement.", "Email": "Courriel", "Copy": "Copier", "Phone": "Téléphone", "Download CV": "Télécharger le CV", "© 2026 Cynthia García Ybarra · Montreal, Canada": "© 2026 Cynthia García Ybarra · Montréal, Canada", "Free, no obligation": "Gratuit, sans engagement", "Book your free consultation": "Réservez votre consultation gratuite", "Free 30-minute call.": "Appel gratuit de 30 minutes.", "We talk about your business and your data.": "Nous parlons de votre entreprise et de vos données.", "Free demo.": "Démo gratuite.", "I show you a small working example of what's possible for you.": "Je vous montre un petit exemple concret de ce qui est possible pour vous.", ", only if you want to go ahead.": ", seulement si vous voulez aller de l'avant.", "Calendar not loading?": "Le calendrier ne s'affiche pas?", "Open the booking page in a new tab ↗": "Ouvrir la page de réservation dans un nouvel onglet ↗", "or email:": "ou par courriel :", "@aria-label:Filter projects by area": "Filtrer les projets par domaine", "@aria-label:Close": "Fermer", "@title:Pick a time for your free consultation": "Choisissez un moment pour votre consultation gratuite", "Problem": "Problème", "What I did": "Ce que j'ai fait", "Stack": "Outils", "Result": "Résultat", "Seven restaurants ran on manual timecards and reports.": "Sept restaurants fonctionnaient avec des feuilles de temps et des rapports manuels.", "Automated operational workflows with Python and APIs": "Automatisation des flux opérationnels avec Python et des API", "Built real-time dashboards and budget vs. actual views": "Tableaux de bord en temps réel et vues budget par rapport au réel", "Added AI analysis of customer feedback": "Analyse par IA des commentaires des clients", "25 hours a week saved, and bonus achievement rates up 20%.": "25 heures épargnées par semaine, et taux d'atteinte des primes en hausse de 20 %.", "Campaign decisions were made without consistent analytics across web properties.": "Les décisions de campagne se prenaient sans analytique cohérente entre les sites Web.", "Analysed web analytics across 15 properties": "Analyse des données Web de 15 sites", "Built 10+ automated dashboards": "Plus de 10 tableaux de bord automatisés", "Implemented recommendation systems": "Mise en place de systèmes de recommandation", "Customer engagement up 30%.": "Engagement client en hausse de 30 %.", "Credit profiles and customer complaints held signals that were not being used.": "Les profils de crédit et les plaintes des clients contenaient des signaux inexploités.", "Built a financial health detection system on credit bureau profiles": "Système de détection de la santé financière à partir des profils du bureau de crédit", "Applied NLP to social media complaints": "Traitement du langage appliqué aux plaintes dans les médias sociaux", "Built a ResNet image check for marketing content": "Contrôle d'images ResNet pour le contenu marketing", "1M+ credit profiles scored, and complaint resolution time reduced by 20%.": "Plus de 1 M de profils de crédit évalués, et délai de résolution des plaintes réduit de 20 %.", "Morgan Stanley (employer) · ongoing": "Morgan Stanley (employeur) · en cours", "A central platform registers metadata for AI models through APIs for datasets, containers, contracts and semantic models. It needed access control so each user reaches only what they are allowed to see.": "Une plateforme centrale enregistre les métadonnées des modèles d'IA au moyen d'API pour les jeux de données, les conteneurs, les contrats et les modèles sémantiques. Il fallait un contrôle d'accès pour que chaque utilisateur n'accède qu'à ce qu'il a le droit de voir.", "Implemented OAuth on-behalf-of (OBO) authentication connecting Snowflake Cortex to Snowflake": "Authentification OAuth « on-behalf-of » (OBO) reliant Snowflake Cortex à Snowflake", "Added CSRF protection to the platform": "Ajout d'une protection CSRF à la plateforme", "Moved Neo4j graph database credentials to Azure Key Vault": "Déplacement des identifiants de la base de données graphe Neo4j vers Azure Key Vault", "Designed an evaluation skill for semantic models; now designing how Snowflake semantic models map to the platform's registration model": "Conception d'une méthode d'évaluation des modèles sémantiques; conception en cours de l'arrimage des modèles sémantiques Snowflake au modèle d'enregistrement de la plateforme", "Requests carry the end user's identity through to the data layer, and database secrets no longer sit in application configuration. Work spans UI, backend and infrastructure.": "Les requêtes transmettent l'identité de l'utilisateur jusqu'à la couche de données, et les secrets de la base de données ne sont plus dans la configuration de l'application. Le travail couvre l'interface, le backend et l'infrastructure.", "The Balance Sheet team needed to catch abnormal values at the level of individual trades, across millions of trades a day.": "L'équipe du bilan devait repérer les valeurs anormales au niveau de chaque transaction, parmi des millions de transactions par jour.", "Built time-series models (DeepAR plus statistical methods) in PySpark": "Modèles de séries chronologiques (DeepAR et méthodes statistiques) en PySpark", "Ran the pipeline on Databricks (Azure) with Snowflake as the data layer": "Pipeline exécuté sur Databricks (Azure) avec Snowflake comme couche de données", "Set up a Jenkins CI/CD pipeline for model validation, regression testing and deployment": "Pipeline CI/CD Jenkins pour la validation des modèles, les tests de régression et le déploiement", "The first ML system promoted to full production in the Balance Sheet team, processing 10M+ trades per day and improving data quality by 30%.": "Premier système de ML mis en pleine production dans l'équipe du bilan, traitant plus de 10 M de transactions par jour et améliorant la qualité des données de 30 %.", "Ticket handling took many manual handoffs, and external 10-Q report data was not available in a usable form.": "Le traitement des billets exigeait de nombreux transferts manuels, et les données des rapports 10-Q externes n'étaient pas disponibles sous une forme utilisable.", "Designed an agentic workflow with MCP across Microsoft Copilot and Jira": "Flux agentique avec MCP entre Microsoft Copilot et Jira", "Built an OCR and PDF extraction workflow for 10-Q reports": "Flux d'extraction OCR et PDF pour les rapports 10-Q", "End-to-end ticket lifecycle automation for the team, and access to 10-Q data that was previously out of reach.": "Automatisation de bout en bout du cycle de vie des billets pour l'équipe, et accès à des données 10-Q auparavant hors de portée.", "Definity (employer) · ongoing": "Definity (employeur) · en cours", "Investigators in the Special Investigations Unit gather information from several separate sources by hand before they can assess a case.": "Les enquêteurs de l'Unité des enquêtes spéciales rassemblent à la main l'information de plusieurs sources avant de pouvoir évaluer un dossier.", "Building an agent with Google Agent Development Kit (ADK)": "Conception d'un agent avec Google Agent Development Kit (ADK)", "Bringing the different data sources together in one place for the investigator": "Regroupement des différentes sources de données en un seul endroit pour l'enquêteur", "In progress. The goal is to automate case research so investigators spend their time on judgement, not on collecting data.": "En cours. Le but est d'automatiser la recherche sur les dossiers pour que les enquêteurs consacrent leur temps au jugement plutôt qu'à la collecte de données.", "The early-detection model had few confirmed fraud cases to learn from, and useful signal was locked in free-text quote notes.": "Le modèle de détection précoce avait peu de cas de fraude confirmés pour apprendre, et des signaux utiles étaient enfouis dans les notes de soumission en texte libre.", "Built a Gemini on Vertex AI workflow that turns quote notes into a fraud-risk feature": "Flux Gemini sur Vertex AI qui transforme les notes de soumission en indicateur de risque de fraude", "Added proxy labels for deflected quotes and joined external watchlists": "Ajout d'étiquettes indirectes pour les soumissions détournées et jumelage avec des listes de surveillance externes", "Generated synthetic data for class imbalance": "Données synthétiques pour corriger le déséquilibre des classes", "Ran a business-rule impact analysis and a bias and fairness analysis of production vs. challenger models": "Analyse d'impact des règles d'affaires, et analyse des biais et de l'équité du modèle en production par rapport au modèle challenger", "Synthetic data": "Données synthétiques", "+9% AUCPR in offline evaluation against a production-features baseline. Now refreshing the claims fraud model.": "+9 % d'AUCPR en évaluation hors ligne par rapport à une référence basée sur les variables en production. Mise à jour en cours du modèle de fraude sur les réclamations.", "An incentive was piloted to reduce employee turnover at six months. The business needed to know whether it worked, not just whether the number moved.": "Un incitatif a été mis à l'essai pour réduire le roulement du personnel à six mois. L'entreprise voulait savoir s'il fonctionnait, et non seulement si le chiffre avait bougé.", "Used propensity scores and Double ML to separate the effect of the incentive from confounders": "Scores de propension et Double ML pour isoler l'effet de l'incitatif des facteurs de confusion", "Compared the effect across groups of stores and employees": "Comparaison de l'effet entre groupes de magasins et d'employés", "Propensity scores": "Scores de propension", "A mixed result: the incentive reduced turnover in some places and not in others, which shows where it is worth offering.": "Un résultat mitigé : l'incitatif a réduit le roulement à certains endroits et pas à d'autres, ce qui montre où il vaut la peine de l'offrir.", "High turnover across a workforce of 330K+ employees, with the reasons spread over HR records and interview text.": "Un roulement élevé dans un effectif de plus de 330 000 employés, avec des causes dispersées entre les dossiers RH et le texte des entrevues.", "Built attrition risk models on HR data enriched with external INEGI datasets": "Modèles de risque d'attrition sur des données RH enrichies de jeux de données externes de l'INEGI", "Ran topic modeling, LLM classification and sentiment analysis on onboarding, stay and exit interviews": "Modélisation de sujets, classification par LLM et analyse de sentiment sur les entrevues d'accueil, de maintien et de départ", "Worked with HR and operations to turn findings into retention plans": "Collaboration avec les RH et les opérations pour transformer les constats en plans de rétention", "A retention strategy and immediate actions grounded in what employees said and what the data showed.": "Une stratégie de rétention et des actions immédiates fondées sur ce que les employés ont dit et ce que les données ont montré.", "Real patient records are hard to share for research because of privacy.": "Les vrais dossiers de patients sont difficiles à partager pour la recherche en raison de la confidentialité.", "Developed an Adversarial Random Forest method for generating electronic health records": "Méthode Adversarial Random Forest pour générer des dossiers de santé électroniques", "Built an evaluation framework for data utility and privacy": "Cadre d'évaluation de l'utilité des données et de la confidentialité", "45,000+ synthetic patient records across 650 variables. Poster accepted at the WiML workshop, NeurIPS 2025.": "Plus de 45 000 dossiers de patients synthétiques sur 650 variables. Affiche acceptée à l'atelier WiML, NeurIPS 2025.", "Read the thesis ↗": "Lire le mémoire ↗", "Copied": "Copié"};
+var TITLE={en:document.title,fr:'Cynthia García Ybarra · Consultation en données et IA'};
+var lang='en';
+function key(t){return t.trim().replace(/\s+/g,' ')}
+function tr(root){
+  var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null),n;
+  while(n=w.nextNode()){
+    var p=n.parentElement;if(!p||p.tagName==='SCRIPT'||p.tagName==='STYLE')continue;
+    if(n.__en===undefined){if(!n.nodeValue.trim())continue;n.__en=n.nodeValue;}
+    var k=key(n.__en);
+    if(lang==='fr'&&FR[k]){var m=n.__en.match(/^(\s*)[\s\S]*?(\s*)$/);n.nodeValue=m[1]+FR[k]+m[2];}
+    else n.nodeValue=n.__en;
+  }
+  var els=root.querySelectorAll?root.querySelectorAll('[aria-label],[placeholder],[title]'):[];
+  Array.prototype.forEach.call(els,function(e){
+    if(e.id==='lang-btn')return;
+    ['aria-label','placeholder','title'].forEach(function(a){
+      if(!e.hasAttribute(a))return;var d='data-en-'+a;
+      if(!e.hasAttribute(d))e.setAttribute(d,e.getAttribute(a));
+      var en=e.getAttribute(d),f=FR['@'+a+':'+en];
+      e.setAttribute(a,lang==='fr'&&f?f:en);
+    });
+  });
+}
+var btn=document.getElementById('lang-btn');
+function setLang(l,save){
+  lang=l;document.documentElement.lang=l;document.title=TITLE[l];
+  tr(document.body);
+  btn.textContent=l==='fr'?'EN':'FR';
+  btn.setAttribute('lang',l==='fr'?'en':'fr');
+  btn.setAttribute('aria-label',l==='fr'?'View in English':'Voir en français');
+  if(save){try{localStorage.setItem('lang',l)}catch(e){}}
+}
+btn.addEventListener('click',function(){setLang(lang==='fr'?'en':'fr',true)});
+// Re-translate content the page builds later (project pop-ups, filtered cards)
+['dlg-body','cards'].forEach(function(id){
+  var node=document.getElementById(id);
+  new MutationObserver(function(){if(lang==='fr')tr(node)}).observe(node,{childList:true,subtree:true});
+});
+var start='en',q=(location.search.match(/[?&]lang=(en|fr)/)||[])[1];
+try{start=q||localStorage.getItem('lang')||((navigator.language||'').toLowerCase().indexOf('fr')===0?'fr':'en')}catch(e){start=q||'en'}
+if(start==='fr')setLang('fr',false);
+})();
+</script>
+</body></html>
