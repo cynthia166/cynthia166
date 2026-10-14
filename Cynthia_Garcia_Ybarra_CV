@@ -1,0 +1,121 @@
+Cynthia García Ybarra
+Montreal, Canada | +1-367-380-9835 | cyngarciailabs@gmail.com | linkedin.com/in/cynthiagarciaybarra
+Data Scientist and ML Engineer with 6+ years
+delivering production AI across finance, insurance, retail, and healthcare. Builds end to
+end: anomaly detection and fraud models, agentic AI workflows, causal machine learning, and the security and authorization layer of AI
+platforms (UI, backend, and infrastructure). Master's-level researcher in synthetic data generation, with a poster at WiML / NeurIPS 2025.
++6 YEARS
+EXPERIENCE / PROJECTS ( )
+Data Scientist | Morgan Stanley, Montreal
+Dec 2025 – Present
+• Built security and authorization for an enterprise metadata platform for AI models, with centralized APIs for datasets, containers,
+contracts, and semantic models — working across UI, backend, and infrastructure.
+• Implemented OAuth on-behalf-of (OBO) authentication connecting Snowflake Cortex to Snowflake, so requests carry the end user's
+identity through to the data layer.
+• Hardened the platform with CSRF protection and moved Neo4j graph database credentials to Azure Key Vault, removing secrets from
+application configuration.
+• Designed an evaluation skill for semantic models in Cortex Code, and designing the mapping of Snowflake semantic models to the
+platform's registration model.
+• Developed and deployed end-to-end time-series AI models (DeepAR + statistical methods) in PySpark for trade-level anomaly
+prediction — the first system promoted to full production within the Balance Sheet team, processing 10M+ trades per day and
+improving data quality by 30%, on Databricks (Azure) with Snowflake as the data layer.
+• Designed and deployed an agentic AI workflow using MCP (Model Context Protocol) across Microsoft Copilot and Jira, automating the
+end-to-end ticket lifecycle; built an OCR and PDF extraction workflow for external 10-Q report data.
+• Designed and implemented a CI/CD pipeline in Jenkins to automate model validation, regression testing, and deployment of ML
+models to production on Databricks — reducing manual release effort and ensuring reproducible, auditable model rollouts for the
+Balance Sheet team.
+Data Specialist (Project) | FEMSA (OXXO), Mexico
+Nov 2025 – Present
+• Applied causal inference (DoWhy / CausalML), Double ML (DoubleML), and propensity scores to measure the causal effect of an
+incentive pilot on 6-month employee turnover — disentangling confounders from true treatment effects and identifying where the
+incentive reduced turnover, to guide where it is offered.
+• Delivered payments and compensation analyses for HR and operations decision-makers.
+• Monitor daily Azure Data Factory pipelines for commercial intelligence data covering sales, promotions, and transactions.
+• Engineered an end-to-end NLP pipeline with BERTopic, LLM-based text classification, and sentiment analysis on employee interview
+corpora, surfacing insights across onboarding, stay, and exit touchpoints.
+• Built predictive ML models for employee attrition risk using structured HR data enriched with external INEGI datasets, and translated
+model outputs into retention plans with HR and operations stakeholders.
+Data Scientist (3-month contract) | Definity, Montreal
+2025 (3 months)
+• Built a fraud investigation agent with Google Agent Development Kit (ADK) that brings multiple data sources together to automate
+case research for the Special Investigations Unit (SIU).
+• Refreshed the claims fraud model across two claims data sources, addressing label scarcity where outcomes exist only for
+investigated claims.
+Data Scientist (Intern) | Definity, Montreal
+May 2025 – Nov 2025
+• Created a Gemini on Vertex AI prompt workflow that converts quote-note text into a fraud-risk feature.
+• Rebuilt early-detection model by engineering features and adding proxy labels for deflected quotes, and joining external watchlists;
+lifted AUCPR +9% in offline eval vs. a production-features baseline.
+• Generated synthetic data to address class imbalance, significantly improving model robustness for the early detection model.
+• Built a business-rule impact analysis for early fraud detection, tuning thresholds and adding new rules to increase the number of true
+positives.
+• Conducted bias and fairness analysis on the production deflected quote model vs. challenger model — segmented score distributions
+into quantiles to compare false positive and false negative rates across subgroups, identifying model vulnerabilities concentrated in
+specific variables and risk segments.
+Data Consultant (Part-time) | Jacmar Foodservice Distribution, Montreal
+Feb 2025 – Aug 2025
+• Automated operational workflows saving 25 hours/week using Python and API integrations.
+• Developed real-time dashboards for 7 restaurants, increasing bonus achievement rates by 20%.
+• Implemented AI-powered customer feedback analysis, improving response efficiency by 20%.
+• Created budget vs. actual dashboards providing enhanced visibility for 9 restaurant managers.
+Data Scientist (Consultant) | Honeywell, Mexico
+Mar 2025 – May 2025
+• Built end-to-end ML pipeline for supply chain lead time prediction (5% accuracy improvement), leveraging SHAP values for
+interpretable AI on large-scale Snowflake datasets to deliver actionable insights to the operations team.
+Data Scientist | ALGORITHIA, Grupo Salinas, Mexico
+Jan 2022 – Jul 2024
+• Developed Mexico's first Financial Health Detection system processing 1M+ credit profiles.
+• Reduced complaint resolution time by 20% using NLP models on social media data.
+• Increased marketing campaign engagement by 10% with ResNet-based image quality assurance system (Computer Vision).
+Data Analyst | NTT DATA, Mexico
+Nov 2021 – Jan 2022
+• Implemented Key Risk Indicators (Booking Controls) for Citi Banamex (Global Policy), creating two new indicators to monitor
+transaction processes and ensure compliance.
+Data Analyst | Elogia México, Mexico
+May 2021 – Nov 2021
+• Analyzed web analytics data across 15 properties, increasing retention by 25%.
+• Built 10+ automated dashboards, improving campaign ROI by 25%.
+• Implemented recommendation systems boosting customer engagement by 30%.
+Finance Analyst | Valmer, Mexican Stock Exchange, Mexico
+Apr 2019 – May 2021
+• Innovated mathematical models for structured note valuation, improving accuracy by 10%.
+• Reduced Monte Carlo simulation runtime by 50% through algorithm optimization.
+• Developed risk management framework using 1,000+ scenario analysis.
+Intern Budget Analysis | Central Bank of Mexico, Mexico
+Jun 2018 – Jan 2019
+• Assisted in financial assessments and supported preparation of a statistical analysis of Banco de México's budget for 2009–2018.
+• Employed time series models that enhanced budget forecasting accuracy by 85%.
+RESEARCH
+Master Thesis Research | Mila – Quebec AI Institute / Université Laval
+Jan 2023 – Jul 2025
+• Pioneered Adversarial Random Forest methodology for synthetic Electronic Health Records generation, producing 45,000+ patient
+records with 650 variables while maintaining statistical validity.
+• Developed a comprehensive evaluation framework ensuring data utility and privacy preservation.
+• Thesis poster accepted, 20th Women in Machine Learning (WiML 2025), co-located with NeurIPS 2025, San Diego, CA.
+Research Assistant | DataSphere Lab, McGill University, Montreal
+Nov 2024 – Jan 2025
+• Built an end-to-end synthetic data pipeline for structured and unstructured NLP data, benchmarking five generative models.
+• Created a Streamlit dashboard that accelerated data quality assessment by 20% and improved downstream ML model accuracy by
+5%.
+KEY COMPETENCIES
+Programming & Tools: Python, SQL, R, Matlab, JavaScript, Visual Basic, Linux, Git, Jenkins CI/CD
+AI/ML: PyTorch, Scikit-learn, PySpark, DeepAR, Causal ML (DoWhy, CausalML, DoubleML, propensity scores), BERTopic, LLMs,
+ResNet
+Agentic AI: MCP, Google ADK, LangChain, LangGraph, Gemini on Vertex AI, Snowflake Cortex
+Security & Platform: OAuth 2.0 on-behalf-of (OBO), CSRF protection, Azure Key Vault, REST APIs, Neo4j
+Data Platforms: Snowflake, Databricks (Microsoft Azure), Azure Data Factory, Google Cloud Platform, Compute Canada
+Analytics & Visualization: Google Analytics, Looker Studio, Reach Reporting, Streamlit
+EDUCATION
+Master of Science, Computer Science Research — Mila – Quebec AI Institute / Université Laval (Oct 2025)
+Dissertation: "Adversarial Random Forest for Synthetic Electronic Health Records Generation."
+Bachelor of Science, Actuarial Science — Universidad Nacional Autónoma de México (UNAM), 2014 – 2018
+Dissertation: "Game Theory: An Application to Housing Credit."
+COURSES & CERTIFICATIONS
+• Agentic AI with LangChain and LangGraph (2026)
+• AI Engineer Agentic Track: The Complete Agent & MCP Course (2025)
+• Google Cloud Platform: Machine Learning Engineer Learning Path (2024)
+• Udemy: Deploying AI & Machine Learning Models (2022)
+• WorldQuant University: Applied Data Science II: Machine Learning (2021)
+• Ironhack Bootcamp: Data Analytics (2021) | Stanford University: Machine Learning (2020)
+LANGUAGES
+Spanish (Native) | English (Advanced) | French 
