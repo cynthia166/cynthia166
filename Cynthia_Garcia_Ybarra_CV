@@ -17,7 +17,7 @@ application configuration.
 • Designed an evaluation skill for semantic models in Cortex Code, and designing the mapping of Snowflake semantic models to the
 platform's registration model.
 • Developed and deployed end-to-end time-series AI models (DeepAR + statistical methods) in PySpark for trade-level anomaly
-prediction — the first system promoted to full production within the Balance Sheet team, processing 10M+ trades per day and
+prediction — the first system promoted to full production within the Balance Sheet team, processing 5M+ trades per day and
 improving data quality by 30%, on Databricks (Azure) with Snowflake as the data layer.
 • Designed and deployed an agentic AI workflow using MCP (Model Context Protocol) across Microsoft Copilot and Jira, automating the
 end-to-end ticket lifecycle; built an OCR and PDF extraction workflow for external 10-Q report data.
@@ -88,7 +88,7 @@ Jun 2018 – Jan 2019
 RESEARCH
 Master Thesis Research | Mila – Quebec AI Institute / Université Laval
 Jan 2023 – Jul 2025
-• Pioneered Adversarial Random Forest methodology for synthetic Electronic Health Records generation, producing 45,000+ patient
+• Pioneered Adversarial Random Forest methodology for synthetic Electronic Health Records generation, producing 44,992+ patient
 records with 650 variables while maintaining statistical validity.
 • Developed a comprehensive evaluation framework ensuring data utility and privacy preservation.
 • Thesis poster accepted, 20th Women in Machine Learning (WiML 2025), co-located with NeurIPS 2025, San Diego, CA.
@@ -118,4 +118,4 @@ COURSES & CERTIFICATIONS
 • WorldQuant University: Applied Data Science II: Machine Learning (2021)
 • Ironhack Bootcamp: Data Analytics (2021) | Stanford University: Machine Learning (2020)
 LANGUAGES
-Spanish (Native) | English (Advanced) | French 
+Spanish (Native) | English (Advanced
